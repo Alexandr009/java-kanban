@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 public class Epic extends Task {
-    //protected HashMap <Subtask> subTask;
     public ArrayList<Subtask> subTask;
 
     public Epic(String name, String description, Status status, int id) {
