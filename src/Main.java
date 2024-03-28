@@ -18,68 +18,69 @@ public class Main {
             int command = scanner.nextInt();
 
             switch (command) {
-                case 100:
+                case 1:
                     HashMap<Integer, Task> listTask = taskManager.getAllTask();
                     System.out.println("Task :" + listTask);
-                case 1:
+                    break;
+                case 2:
                     System.out.println("Введите название задачи");
                     String name = scanner.next();
                     System.out.println("Введите описание задачи");
                     String description = scanner.next();
                     addTask(name, description, Status.NEW);
                     break;
-                case 2:
+                case 3:
                     System.out.println("Введите id задачи");
                     int id = scanner.nextInt();
                     Task task = taskManager.getTask(id);
                     System.out.println("task = " + task);
                     break;
-                case 3:
+                case 4:
                     taskManager.deleteAllTask();
                     break;
-                case 4:
+                case 5:
                     System.out.println(taskManager.toString());
                     break;
-                case 5:
+                case 6:
                     updateTask();
                     break;
-                case 6:
+                case 7:
                     System.out.println("Введите id задачи");
                     int idTask = scanner.nextInt();
                     deleteTaskRecord(idTask);
                     break;
-                case 11:
+                case 8:
                     System.out.println("Введите название Epic");
                     String nameEpic = scanner.next();
                     System.out.println("Введите описание Epic");
                     String descriptionEpic = scanner.next();
                     addEpic(nameEpic, descriptionEpic, Status.NEW);
                     break;
-                case 12:
+                case 9:
                     System.out.println("Введите id epic");
                     int idEpic = scanner.nextInt();
                     Epic epic = taskManager.getEpic(idEpic);
                     System.out.println("epic = " + epic);
                     break;
-                case 13:
+                case 10:
                     taskManager.deleteAllEpic();
                     break;
-                case 14:
+                case 11:
                     HashMap<Integer, Epic> listEpic = taskManager.getAllEpic();
                     System.out.println("Epic :" + listEpic);
                     break;
-                case 15:
+                case 12:
                     updateEpic();
                     break;
-                case 16:
+                case 13:
                     System.out.println("Введите id Epic");
                     deleteEpicRecord(scanner.nextInt());
-                case 17:
+                case 14:
                     System.out.println("Введите id Epic");
                     Epic epicSubtask = taskManager.getEpic(scanner.nextInt());
                     System.out.println("epic list Subtasks -" + epicSubtask);
                     break;
-                case 21:
+                case 15:
                     System.out.println("Введите название Subtask");
                     String nameSubtask = scanner.next();
                     System.out.println("Введите описание Subtask");
@@ -88,23 +89,23 @@ public class Main {
                     int idEpicParent = scanner.nextInt();
                     addSubtask(nameSubtask, descriptionSubtask, Status.NEW, idEpicParent);
                     break;
-                case 22:
+                case 16:
                     System.out.println("Введите id Subtask");
                     Subtask subtask = taskManager.getSubtask(scanner.nextInt());
                     System.out.println("subtask = " + subtask);
                     break;
 
-                case 23:
+                case 17:
                     taskManager.deleteAllSubtask();
                     break;
-                case 24:
+                case 18:
                     HashMap<Integer, Subtask> listSubtask = taskManager.getAllSubtask();
                     System.out.println("Subtask :" + listSubtask);
                     break;
-                case 25:
+                case 19:
                     updateSubtask();
                     break;
-                case 26:
+                case 20:
                     System.out.println("Введите id Subtask");
                     deleteSubtaskRecord(scanner.nextInt());
                     break;
@@ -118,28 +119,28 @@ public class Main {
 
     private static void printMenu() {
         System.out.println("Выберите команду:");
-        System.out.println("100 - Показать список всех Таск");
-        System.out.println("1 - Добавить новою Таск");
-        System.out.println("2 - Показать Таск по Id");
-        System.out.println("3 - Удалить все Таск");
-        System.out.println("4 - Показать все Таск");
-        System.out.println("5 - Обновить Таск по ид");
-        System.out.println("6 - Удалить Таск по ид");
+        System.out.println("1 - Показать список всех Таск");
+        System.out.println("2 - Добавить новою Таск");
+        System.out.println("3 - Показать Таск по Id");
+        System.out.println("4 - Удалить все Таск");
+        System.out.println("5 - Показать все Таск");
+        System.out.println("6 - Обновить Таск по ид");
+        System.out.println("7 - Удалить Таск по ид");
         /////////////////////////////////////////
-        System.out.println("11 - Добавить новою Epic");
-        System.out.println("12 - Показать Epic по Id");
-        System.out.println("13 - Удалить все Epic");
-        System.out.println("14 - Показать все Epic");
-        System.out.println("15 - Обновить Epic");
-        System.out.println("16 - Удалить Epic по ид");
-        System.out.println("17 - Получить все Subtask по ид Epic");
+        System.out.println("8 - Добавить новою Epic");
+        System.out.println("9 - Показать Epic по Id");
+        System.out.println("10 - Удалить все Epic");
+        System.out.println("11 - Показать все Epic");
+        System.out.println("12 - Обновить Epic");
+        System.out.println("13 - Удалить Epic по ид");
+        System.out.println("14 - Получить все Subtask по ид Epic");
         /////////////////////////////////////////
-        System.out.println("21 - Добавить новою Subtask");
-        System.out.println("22 - Показать Subtask по Id");
-        System.out.println("23 - Удалить все Subtask");
-        System.out.println("24 - Показать все Subtask");
-        System.out.println("25 - Обновить Subtask");
-        System.out.println("26 - Удалить Subtask по ид");
+        System.out.println("15 - Добавить новою Subtask");
+        System.out.println("16 - Показать Subtask по Id");
+        System.out.println("17 - Удалить все Subtask");
+        System.out.println("18 - Показать все Subtask");
+        System.out.println("19 - Обновить Subtask");
+        System.out.println("20 - Удалить Subtask по ид");
         ///////////////////////////////////////
         System.out.println("0 - Выход");
     }
