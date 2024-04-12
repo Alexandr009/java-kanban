@@ -1,17 +1,17 @@
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import java.util.*;
 public class Main {
     static Scanner scanner;
-    static TaskManager taskManager;
+    static InMemoryTaskManager taskManager;
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
         HashMap<Integer, ArrayList<Task>> taskOdject = new HashMap<>();
         HashMap<Integer, ArrayList<Epic>> epicOdject = new HashMap<>();
         HashMap<Integer, ArrayList<Subtask>> subtaskOdject = new HashMap<>();
-        taskManager = new TaskManager(taskOdject, epicOdject, subtaskOdject);
+        taskManager = new InMemoryTaskManager(taskOdject, epicOdject, subtaskOdject);
 
         while (true) {
             printMenu();
@@ -109,6 +109,10 @@ public class Main {
                     System.out.println("Введите id Subtask");
                     deleteSubtaskRecord(scanner.nextInt());
                     break;
+                case 21:
+                    List<Task> listHistory = taskManager.getHistory();
+                    System.out.println("listHistory = " + listHistory);
+                    break;
                 case 0:
                     return;
             }
@@ -141,6 +145,7 @@ public class Main {
         System.out.println("18 - Показать все Subtask");
         System.out.println("19 - Обновить Subtask");
         System.out.println("20 - Удалить Subtask по ид");
+        System.out.println("21 - История просмотров задач");
         ///////////////////////////////////////
         System.out.println("0 - Выход");
     }

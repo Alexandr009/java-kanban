@@ -1,150 +1,50 @@
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
-public class TaskManager {
-    public static int counter;
-    //HashMap<Integer, ArrayList<Task>> listTask;
-    HashMap<Integer, Task> listTask;
-    HashMap<Integer, Subtask> listSubtask;
-    HashMap<Integer, Epic> listEpic;
-
-    public TaskManager(HashMap listTask, HashMap listEpic, HashMap listSubtask) {
-        this.listTask = listTask;
-        this.listEpic = listEpic;
-        this.listSubtask = listSubtask;
-    }
-
+public interface TaskManager {
+    /////////////////Common////////////////////////////
+    List<Task> getHistory();
     ///////////////////Subtask////////////////////////////////////
-    int addSubtask(String name, String description, Status status, int idEpic) {
-        counter = counter + 1;
-        Subtask subtask = new Subtask(name, description, status, counter, idEpic);
-        System.out.println("" + subtask);
-        listSubtask.put(counter, subtask);
-        listEpic.get(idEpic).subTask.add(subtask);
-        return counter;
-    }
+    int addSubtask(String name, String description, Status status, int idEpic);
 
-    Subtask getSubtask(int id) {
-        Subtask subtask = listSubtask.get(id);
-        return subtask;
-    }
+    Subtask getSubtask(int id);
 
-    void deleteAllSubtask() {
-        listSubtask.clear();
-        System.out.println("Все Subtask удалены");
-    }
+    void deleteAllSubtask();
 
-    HashMap getAllSubtask() {
-        return listSubtask;
-    }
+    HashMap getAllSubtask();
 
-    Subtask updateSubtask(int id, String name, String description, Status status) {
-        listSubtask.get(id).name = name;
-        listSubtask.get(id).description = description;
-        listSubtask.get(id).status = status;
-        //
-        int idEpic = listSubtask.get(id).idEpic;
-        //ArrayList<Subtask> subtasksForEpic = new ArrayList<>();
-        Epic epic = getEpic(listSubtask.get(id).idEpic);
-        boolean checkSameStatus = true;
-        ArrayList<Status> listStatus = new ArrayList<>();
-        for (Subtask subtack : epic.subTask) {
-            listStatus.add(subtack.status);
-            if (epic.subTask.size() == listStatus.size()) {
-                for (int i = 0; i < listStatus.size(); i++) {
-                    if (listStatus.get(0) != listStatus.get(i)) {
-                        checkSameStatus = false;
-                    }
-                }
-            }
-        }
-        if (checkSameStatus == true) {
-            Epic epicUpdated = updateEpicStatus(idEpic, status);
-            System.out.println("epicUpdated = " + epicUpdated);
-        }
-        //
-        return listSubtask.get(id);
-    }
+    Subtask updateSubtask(int id, String name, String description, Status status);
 
-    void deleteSubtask(int id) {
-        listSubtask.remove(id);
-    }
+    void deleteSubtask(int id);
 
     ///////////////////epic////////////////////////////////////
-    int addEpic(String name, String description, Status status) {
-        counter = counter + 1;
-        Epic epic = new Epic(name, description, status, counter);
-        System.out.println("" + epic);
-        listEpic.put(counter, epic);
-        return counter;
-    }
+    int addEpic(String name, String description, Status status);
 
-    Epic getEpic(int id) {
-        Epic epic = listEpic.get(id);
-        return epic;
-    }
+    Epic getEpic(int id);
 
-    void deleteAllEpic() {
-        listEpic.clear();
-        System.out.println("Все Epic удалены");
-    }
+    void deleteAllEpic();
 
-    HashMap getAllEpic() {
-        return listEpic;
-    }
+    HashMap getAllEpic();
 
-    void deleteEpic(int id) {
-        listEpic.remove(id);
-    }
+    void deleteEpic(int id);
 
-    void updateEpic(int id, String name, String description) {
-        listEpic.get(id).name = name;
-        listEpic.get(id).description = description;
-    }
+    void updateEpic(int id, String name, String description);
 
-    Epic updateEpicStatus(int id, Status status) {
-        Epic epic = listEpic.get(id);
-        epic.status = status;
-        return epic;
-    }
-    ///////////////////Task///////////////////////////////
+    Epic updateEpicStatus(int id, Status status);
 
-    int addTask(String name, String description, Status status) {
-        counter = counter + 1;
-        Task task = new Task(name, description, status, counter);
-        System.out.println("" + task);
-        listTask.put(counter, task);
-        return counter;
-    }
+    int addTask(String name, String description, Status status);
 
-    HashMap getAllTask() {
-        return listTask;
-    }
+    HashMap getAllTask();
 
-    Task getTask(int id) {
-        Task task = listTask.get(id);
-        return task;
-    }
+    Task getTask(int id);
 
-    void deleteAllTask() {
-        listTask.clear();
-        System.out.println("Все Task удалены");
-    }
+    void deleteAllTask();
 
-    void updateTask(int id, String name, String description, Status status) {
-        listTask.get(id).name = name;
-        listTask.get(id).description = description;
-        listTask.get(id).status = status;
-    }
+    void updateTask(int id, String name, String description, Status status);
 
-    void deleteTask(int id) {
-        listTask.remove(id);
-    }
+    void deleteTask(int id);
 
     @Override
-    public String toString() {
-        return "TaskManager{" +
-                "listTask=" + listTask +
-                '}';
-    }
+    String toString();
 }
