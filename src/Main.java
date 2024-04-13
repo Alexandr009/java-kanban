@@ -4,14 +4,18 @@ import java.util.Scanner;
 import java.util.*;
 public class Main {
     static Scanner scanner;
-    static InMemoryTaskManager taskManager;
+    static TaskManager taskManager;
+    //static Managers manager;
+    static HistoryManager historyManager;
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
         HashMap<Integer, ArrayList<Task>> taskOdject = new HashMap<>();
         HashMap<Integer, ArrayList<Epic>> epicOdject = new HashMap<>();
         HashMap<Integer, ArrayList<Subtask>> subtaskOdject = new HashMap<>();
-        taskManager = new InMemoryTaskManager(taskOdject, epicOdject, subtaskOdject);
+        //taskManager = new InMemoryTaskManager(taskOdject, epicOdject, subtaskOdject);
+        taskManager =  Managers.getDefault(taskOdject, epicOdject, subtaskOdject);
+        historyManager = Managers.getDefaultHistory();
 
         while (true) {
             printMenu();
@@ -110,7 +114,7 @@ public class Main {
                     deleteSubtaskRecord(scanner.nextInt());
                     break;
                 case 21:
-                    List<Task> listHistory = taskManager.getHistory();
+                    List<Task> listHistory = historyManager.getHistory();
                     System.out.println("listHistory = " + listHistory);
                     break;
                 case 0:

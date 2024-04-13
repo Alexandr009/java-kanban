@@ -7,28 +7,32 @@ public class InMemoryTaskManager implements TaskManager {
     HashMap<Integer, Task> listTask;
     HashMap<Integer, Subtask> listSubtask;
     HashMap<Integer, Epic> listEpic;
-    List<Task> listHistory;
+    //List<Task> listHistory;
+    InMemoryHistoryManager inMemoryHistoryManager;
+    Managers managers;
 
     public InMemoryTaskManager(HashMap listTask, HashMap listEpic, HashMap listSubtask) {
         this.listTask = listTask;
         this.listEpic = listEpic;
         this.listSubtask = listSubtask;
-        listHistory = new ArrayList<Task>(10);
+        //listHistory = new ArrayList<Task>(10);
+        //inMemoryHistoryManager = new InMemoryHistoryManager();
+       // managers = new Managers();
+
     }
     /////////////////Common////////////////////////////
+    /*
     @Override
     public List<Task> getHistory(){
-        //Task task = new Task("","",Status.NEW,1);
-        //ArrayList<Task> listHistory = new ArrayList<Task>();
-        //listHistory.add(task);
         return listHistory;
     }
+
     public void addTaskToHistory(Task task){
         if(listHistory.size() == 10){
             listHistory.remove(0);
         }
         listHistory.add(task);
-    }
+    }*/
     ///////////////////Subtask////////////////////////////////////
     @Override
     public int addSubtask(String name, String description, Status status, int idEpic) {
@@ -43,7 +47,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask getSubtask(int id) {
         Subtask subtask = listSubtask.get(id);
-        addTaskToHistory(subtask);
+        inMemoryHistoryManager.addTaskToHistory(subtask);
         return subtask;
     }
 
@@ -105,7 +109,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Epic getEpic(int id) {
         Epic epic = listEpic.get(id);
-        addTaskToHistory(epic);
+        inMemoryHistoryManager.addTaskToHistory(epic);
         return epic;
     }
 
@@ -156,7 +160,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTask(int id) {
         Task task = listTask.get(id);
-        addTaskToHistory(task);
+        inMemoryHistoryManager.addTaskToHistory(task);
         return task;
     }
 
