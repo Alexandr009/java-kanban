@@ -13,7 +13,6 @@ public class Main {
         HashMap<Integer, ArrayList<Task>> taskOdject = new HashMap<>();
         HashMap<Integer, ArrayList<Epic>> epicOdject = new HashMap<>();
         HashMap<Integer, ArrayList<Subtask>> subtaskOdject = new HashMap<>();
-        //taskManager = new InMemoryTaskManager(taskOdject, epicOdject, subtaskOdject);
         taskManager =  Managers.getDefault(taskOdject, epicOdject, subtaskOdject);
         historyManager = Managers.getDefaultHistory();
 

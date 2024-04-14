@@ -7,7 +7,7 @@ public class Task {
     public String typeTask;//Task Subtask Epic
     public Status status;
 
-    public Task(String name, String description, Status status, int idTask) {//String typeTask
+    public Task(String name, String description, Status status, int idTask) {
         this.name = name;
         this.description = description;
         this.typeTask = "Task";
@@ -34,8 +34,4 @@ public class Task {
         return Objects.equals(name, task.name) && Objects.equals(description, task.description) && Objects.equals(typeTask, task.typeTask) && status == task.status;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, description, typeTask, status);
-    }
 }

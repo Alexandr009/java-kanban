@@ -2,8 +2,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public final class Managers {
-    public static HistoryManager historyManager;// = new InMemoryHistoryManager();
-    public static TaskManager taskManager; //= new InMemoryTaskManager();
+    public static HistoryManager historyManager;
+    public static TaskManager taskManager;
 
     public static HistoryManager getDefaultHistory(){
         if (historyManager == null) {

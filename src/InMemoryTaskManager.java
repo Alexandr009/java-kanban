@@ -7,32 +7,16 @@ public class InMemoryTaskManager implements TaskManager {
     HashMap<Integer, Task> listTask;
     HashMap<Integer, Subtask> listSubtask;
     HashMap<Integer, Epic> listEpic;
-    //List<Task> listHistory;
-    InMemoryHistoryManager inMemoryHistoryManager;
-    Managers managers;
 
+    HistoryManager historyManager;
     public InMemoryTaskManager(HashMap listTask, HashMap listEpic, HashMap listSubtask) {
         this.listTask = listTask;
         this.listEpic = listEpic;
         this.listSubtask = listSubtask;
-        //listHistory = new ArrayList<Task>(10);
-        //inMemoryHistoryManager = new InMemoryHistoryManager();
-       // managers = new Managers();
+         historyManager = Managers.getDefaultHistory();
 
     }
-    /////////////////Common////////////////////////////
-    /*
-    @Override
-    public List<Task> getHistory(){
-        return listHistory;
-    }
 
-    public void addTaskToHistory(Task task){
-        if(listHistory.size() == 10){
-            listHistory.remove(0);
-        }
-        listHistory.add(task);
-    }*/
     ///////////////////Subtask////////////////////////////////////
     @Override
     public int addSubtask(String name, String description, Status status, int idEpic) {
@@ -47,7 +31,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask getSubtask(int id) {
         Subtask subtask = listSubtask.get(id);
-        inMemoryHistoryManager.addTaskToHistory(subtask);
+        historyManager.addTaskToHistory(subtask);
         return subtask;
     }
 
@@ -67,9 +51,8 @@ public class InMemoryTaskManager implements TaskManager {
         listSubtask.get(id).name = name;
         listSubtask.get(id).description = description;
         listSubtask.get(id).status = status;
-        //
+
         int idEpic = listSubtask.get(id).idEpic;
-        //ArrayList<Subtask> subtasksForEpic = new ArrayList<>();
         Epic epic = getEpic(listSubtask.get(id).idEpic);
         boolean checkSameStatus = true;
         ArrayList<Status> listStatus = new ArrayList<>();
@@ -87,7 +70,6 @@ public class InMemoryTaskManager implements TaskManager {
             Epic epicUpdated = updateEpicStatus(idEpic, status);
             System.out.println("epicUpdated = " + epicUpdated);
         }
-        //
         return listSubtask.get(id);
     }
 
@@ -109,7 +91,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Epic getEpic(int id) {
         Epic epic = listEpic.get(id);
-        inMemoryHistoryManager.addTaskToHistory(epic);
+        historyManager.addTaskToHistory(epic);
         return epic;
     }
 
@@ -160,7 +142,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTask(int id) {
         Task task = listTask.get(id);
-        inMemoryHistoryManager.addTaskToHistory(task);
+        historyManager.addTaskToHistory(task);
         return task;
     }
 
@@ -180,12 +162,5 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteTask(int id) {
         listTask.remove(id);
-    }
-
-    @Override
-    public String toString() {
-        return "TaskManager{" +
-                "listTask=" + listTask +
-                '}';
     }
 }
