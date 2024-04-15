@@ -130,23 +130,23 @@ public class Main {
         System.out.println("3 - Показать Таск по идентификатору");
         System.out.println("4 - Удалить все Таск");
         System.out.println("5 - Показать все Таск");
-        System.out.println("6 - Обновить Таск по ид");
-        System.out.println("7 - Удалить Таск по ид");
+        System.out.println("6 - Обновить Таск по идентификатору");
+        System.out.println("7 - Удалить Таск по идентификатору");
         /////////////////////////////////////////
         System.out.println("8 - Добавить новою Epic");
         System.out.println("9 - Показать Epic по идентификатору");
         System.out.println("10 - Удалить все Epic");
         System.out.println("11 - Показать все Epic");
         System.out.println("12 - Обновить Epic");
-        System.out.println("13 - Удалить Epic по ид");
-        System.out.println("14 - Получить все Subtask по ид Epic");
+        System.out.println("13 - Удалить Epic по идентификатору");
+        System.out.println("14 - Получить все Subtask по идентификатору Epic");
         /////////////////////////////////////////
         System.out.println("15 - Добавить новою Subtask");
         System.out.println("16 - Показать Subtask по идентификатору");
         System.out.println("17 - Удалить все Subtask");
         System.out.println("18 - Показать все Subtask");
         System.out.println("19 - Обновить Subtask");
-        System.out.println("20 - Удалить Subtask по ид");
+        System.out.println("20 - Удалить Subtask по идентификатору");
         System.out.println("21 - История просмотров задач");
         ///////////////////////////////////////
         System.out.println("0 - Выход");
@@ -184,12 +184,12 @@ public class Main {
 
     private static void addTask(String name, String description, Status status) {
         int idNew = taskManager.addTask(name, description, status);
-        System.out.println("id = " + idNew);
+        System.out.println("идентификатор = " + idNew);
     }
 
     private static void addEpic(String name, String description, Status status) {
         int idNew = taskManager.addEpic(name, description, status);
-        System.out.println("id = " + idNew);
+        System.out.println("идентификатор = " + idNew);
     }
 
     private static void deleteEpicRecord(int id) {
