@@ -17,8 +17,6 @@ public class TaskTest {
 
     @Test
     void addNewTask() {
-
-        //task = new Task("Test addNewTask", "Test addNewTask description", Status.NEW, counter);
         System.out.println("" + task);
         HashMap<Integer, Task> listTask = new HashMap<>();
         listTask.put(task.idTask, task);
@@ -32,11 +30,8 @@ public class TaskTest {
     void checkEqualsTask(){
         int counter = 2;
         Task taskTwo = new Task("Task", "description", Status.NEW, counter);
-        //boolean chexck = taskTwo.equals(task);
         assertTrue(taskTwo.equals(task));
     }
-    //Task{id='2'name='Task', description='description', typeTask='Task', status=NEW}
-
     @Test
     void checkToString(){
         String taskParent = "Task{id='1'name='Task', description='description', typeTask='Task', status=NEW}";

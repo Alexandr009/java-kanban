@@ -5,7 +5,6 @@ import java.util.*;
 public class Main {
     static Scanner scanner;
     static TaskManager taskManager;
-    //static Managers manager;
     static HistoryManager historyManager;
 
     public static void main(String[] args) {
@@ -33,7 +32,7 @@ public class Main {
                     addTask(name, description, Status.NEW);
                     break;
                 case 3:
-                    System.out.println("Введите id задачи");
+                    System.out.println("Введите идентификатор задачи");
                     int id = scanner.nextInt();
                     Task task = taskManager.getTask(id);
                     System.out.println("task = " + task);
@@ -48,7 +47,7 @@ public class Main {
                     updateTask();
                     break;
                 case 7:
-                    System.out.println("Введите id задачи");
+                    System.out.println("Введите идентификатор задачи");
                     int idTask = scanner.nextInt();
                     deleteTaskRecord(idTask);
                     break;
@@ -60,7 +59,7 @@ public class Main {
                     addEpic(nameEpic, descriptionEpic, Status.NEW);
                     break;
                 case 9:
-                    System.out.println("Введите id epic");
+                    System.out.println("Введите идентификатор epic");
                     int idEpic = scanner.nextInt();
                     Epic epic = taskManager.getEpic(idEpic);
                     System.out.println("epic = " + epic);
@@ -76,10 +75,10 @@ public class Main {
                     updateEpic();
                     break;
                 case 13:
-                    System.out.println("Введите id Epic");
+                    System.out.println("Введите идентификатор Epic");
                     deleteEpicRecord(scanner.nextInt());
                 case 14:
-                    System.out.println("Введите id Epic");
+                    System.out.println("Введите идентификатор Epic");
                     Epic epicSubtask = taskManager.getEpic(scanner.nextInt());
                     System.out.println("epic list Subtasks -" + epicSubtask);
                     break;
@@ -88,12 +87,12 @@ public class Main {
                     String nameSubtask = scanner.next();
                     System.out.println("Введите описание Subtask");
                     String descriptionSubtask = scanner.next();
-                    System.out.println("Введите id epic для Subtask");
+                    System.out.println("Введите идентификатор epic для Subtask");
                     int idEpicParent = scanner.nextInt();
                     addSubtask(nameSubtask, descriptionSubtask, Status.NEW, idEpicParent);
                     break;
                 case 16:
-                    System.out.println("Введите id Subtask");
+                    System.out.println("Введите идентификатор Subtask");
                     Subtask subtask = taskManager.getSubtask(scanner.nextInt());
                     System.out.println("subtask = " + subtask);
                     break;
@@ -109,7 +108,7 @@ public class Main {
                     updateSubtask();
                     break;
                 case 20:
-                    System.out.println("Введите id Subtask");
+                    System.out.println("Введите идентификатор Subtask");
                     deleteSubtaskRecord(scanner.nextInt());
                     break;
                 case 21:
@@ -128,14 +127,14 @@ public class Main {
         System.out.println("Выберите команду:");
         System.out.println("1 - Показать список всех Таск");
         System.out.println("2 - Добавить новою Таск");
-        System.out.println("3 - Показать Таск по Id");
+        System.out.println("3 - Показать Таск по идентификатору");
         System.out.println("4 - Удалить все Таск");
         System.out.println("5 - Показать все Таск");
         System.out.println("6 - Обновить Таск по ид");
         System.out.println("7 - Удалить Таск по ид");
         /////////////////////////////////////////
         System.out.println("8 - Добавить новою Epic");
-        System.out.println("9 - Показать Epic по Id");
+        System.out.println("9 - Показать Epic по идентификатору");
         System.out.println("10 - Удалить все Epic");
         System.out.println("11 - Показать все Epic");
         System.out.println("12 - Обновить Epic");
@@ -143,7 +142,7 @@ public class Main {
         System.out.println("14 - Получить все Subtask по ид Epic");
         /////////////////////////////////////////
         System.out.println("15 - Добавить новою Subtask");
-        System.out.println("16 - Показать Subtask по Id");
+        System.out.println("16 - Показать Subtask по идентификатору");
         System.out.println("17 - Удалить все Subtask");
         System.out.println("18 - Показать все Subtask");
         System.out.println("19 - Обновить Subtask");
@@ -154,7 +153,7 @@ public class Main {
     }
 
     private static void updateTask() {
-        System.out.println("Введите id задачи");
+        System.out.println("Введите идентификатор задачи");
         int id = scanner.nextInt();
 
         System.out.println("Введите новое название задачи");
@@ -198,7 +197,7 @@ public class Main {
     }
 
     private static void updateEpic() {
-        System.out.println("Введите id Epic");
+        System.out.println("Введите идентификатор Epic");
         int id = scanner.nextInt();
 
         System.out.println("Введите новое название epic");
@@ -211,11 +210,11 @@ public class Main {
 
     private static void addSubtask(String name, String description, Status status, int idEpic) {
         int idNew = taskManager.addSubtask(name, description, status, idEpic);
-        System.out.println("id = " + idNew);
+        System.out.println("идентификатор = " + idNew);
     }
 
     private static void updateSubtask() {
-        System.out.println("Введите id Subtask");
+        System.out.println("Введите идентификатор Subtask");
         int id = scanner.nextInt();
 
         System.out.println("Введите новое название Subtask");
