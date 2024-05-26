@@ -10,7 +10,7 @@ public class InMemoryHistoryManager implements HistoryManager{
     private Node tail;
     public InMemoryHistoryManager(){
 
-        listHistory = new ArrayList<Task>(10);
+        listHistory = new ArrayList<Task>();
     }
     private void linkLast(Task task){
         Node newNode = new Node(task.idTask,task.name, task.description,task.typeTask,task.status);//
@@ -73,9 +73,6 @@ public class InMemoryHistoryManager implements HistoryManager{
     public void addTaskToHistory(Task task){
       if (taskMap.containsKey(task.idTask)){
           removeNode(taskMap.get(task.idTask));
-      }
-      if (taskMap.size() == 10){
-          removeNode(head);
       }
       linkLast(task);
 
