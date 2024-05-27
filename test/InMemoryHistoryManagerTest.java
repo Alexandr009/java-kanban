@@ -31,18 +31,12 @@ public class InMemoryHistoryManagerTest {
     }
 
     @Test
-    void checkListHistoryLength10Limit(){
+    void checkListHistoryDouble(){
         inMemoryHistoryManager.addTaskToHistory(task1);
         inMemoryHistoryManager.addTaskToHistory(task2);
         inMemoryHistoryManager.addTaskToHistory(task1);
-        inMemoryHistoryManager.addTaskToHistory(task2);
-        inMemoryHistoryManager.addTaskToHistory(task1);
-        inMemoryHistoryManager.addTaskToHistory(task2);
-        inMemoryHistoryManager.addTaskToHistory(task1);
-        inMemoryHistoryManager.addTaskToHistory(task2);
-        inMemoryHistoryManager.addTaskToHistory(task1);
-        inMemoryHistoryManager.addTaskToHistory(task2);
-        assertEquals(10, inMemoryHistoryManager.listHistory.size(), "Неверное количество задач.");
+        List<Task> task = inMemoryHistoryManager.getHistory();
+        assertEquals(2, task.size(), "Неверное количество задач.");
     }
 
 

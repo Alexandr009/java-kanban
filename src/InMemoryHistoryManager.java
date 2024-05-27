@@ -13,7 +13,7 @@ public class InMemoryHistoryManager implements HistoryManager{
         listHistory = new ArrayList<Task>();
     }
     private void linkLast(Task task){
-        Node newNode = new Node(task.idTask,task.name, task.description,task.typeTask,task.status);//
+        Node newNode = new Node(task.idTask,task.name, task.description,task.typeTask,task.status);
         if (tail == null) {
             head = newNode;
             tail = newNode;
@@ -43,7 +43,7 @@ public class InMemoryHistoryManager implements HistoryManager{
         }
     }
 
-    private void removeNode(Node node){//
+    private void removeNode(Node node){
         if(node == head){
             head = head.next;
             if(head != null){

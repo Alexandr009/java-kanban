@@ -13,7 +13,7 @@ public class InMemoryTaskManagerTest {
     static HashMap<Integer, Subtask> listSubtask;
     static HashMap<Integer, Epic> listEpic;
     public static InMemoryTaskManager inMemoryTaskManager;
-    //static Task task;
+
     static int idFirstTask;
     static int idFirstEpic;
     static int idFirstSubtask;
@@ -63,7 +63,7 @@ public class InMemoryTaskManagerTest {
     void deleteTaskRecord(){
 
         inMemoryTaskManager.deleteTask(idFirstTask);
-        assertNull(inMemoryTaskManager.getTask(idFirstTask),"Таск не удален.");
+        assertNull(inMemoryTaskManager.listTask.get(idFirstTask),"Таск не удален.");
     }
 
     @Test
@@ -104,7 +104,7 @@ public class InMemoryTaskManagerTest {
     void deleteEpicRecord(){
 
         inMemoryTaskManager.deleteEpic(idFirstEpic);
-        assertNull(inMemoryTaskManager.getEpic(idFirstEpic),"Epic не удален.");
+        assertNull(inMemoryTaskManager.listEpic.get(idFirstEpic),"Epic не удален.");
     }
     @Test
     void deleteAllEpic(){
@@ -146,7 +146,16 @@ public class InMemoryTaskManagerTest {
     @Test
     void deleteSubtaskRecord(){
         inMemoryTaskManager.deleteSubtask(idFirstSubtask);
-        assertNull(inMemoryTaskManager.getSubtask(idFirstSubtask),"Таск не удален.");
+        assertNull(inMemoryTaskManager.listSubtask.get(idFirstSubtask),"Таск не удален.");
+    }
+    @Test
+    void deleteSubtaskRecordCheckEpicSubtask(){
+        Subtask subtask = listSubtask.get(idFirstSubtask);
+        Epic epic = listEpic.get(subtask.idEpic);
+        inMemoryTaskManager.deleteSubtask(idFirstSubtask);
+        assertNull(inMemoryTaskManager.listSubtask.get(idFirstSubtask),"Таск не удален.");
+        boolean check = epic.subTask.contains(subtask);
+        assertFalse(check,"Таск не удален.");
     }
 
     @Test
