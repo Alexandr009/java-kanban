@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public interface TaskManager {
     /////////////////Common////////////////////////////
-    //List<Task> getHistory();
     ///////////////////Subtask////////////////////////////////////
     int addSubtask(String name, String description, Status status, int idEpic);
 
