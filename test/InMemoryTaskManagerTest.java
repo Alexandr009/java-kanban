@@ -63,7 +63,7 @@ public class InMemoryTaskManagerTest {
     void deleteTaskRecord(){
 
         inMemoryTaskManager.deleteTask(idFirstTask);
-        assertNull(inMemoryTaskManager.listTask.get(idFirstTask),"Таск не удален.");
+        assertNull(inMemoryTaskManager.listTask.get(idFirstTask),"Task не удален.");
     }
 
     @Test
@@ -146,16 +146,16 @@ public class InMemoryTaskManagerTest {
     @Test
     void deleteSubtaskRecord(){
         inMemoryTaskManager.deleteSubtask(idFirstSubtask);
-        assertNull(inMemoryTaskManager.listSubtask.get(idFirstSubtask),"Таск не удален.");
+        assertNull(inMemoryTaskManager.listSubtask.get(idFirstSubtask),"Task не удален.");
     }
     @Test
     void deleteSubtaskRecordCheckEpicSubtask(){
         Subtask subtask = listSubtask.get(idFirstSubtask);
         Epic epic = listEpic.get(subtask.idEpic);
         inMemoryTaskManager.deleteSubtask(idFirstSubtask);
-        assertNull(inMemoryTaskManager.listSubtask.get(idFirstSubtask),"Таск не удален.");
+        assertNull(inMemoryTaskManager.listSubtask.get(idFirstSubtask),"Task не удален.");
         boolean check = epic.subTask.contains(subtask);
-        assertFalse(check,"Таск не удален.");
+        assertFalse(check,"Task не удален.");
     }
 
     @Test

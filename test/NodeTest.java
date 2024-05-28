@@ -19,6 +19,6 @@ public class NodeTest {
     void addNewTask() {
         Map<Integer,Node> taskMap = new HashMap<>();
         taskMap.put(1, node);
-        assertEquals(1,taskMap.size(),"Нода не создана.");
+        assertEquals(1,taskMap.size(),"Node не создана.");
     }
 }
