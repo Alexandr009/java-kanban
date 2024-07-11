@@ -4,7 +4,7 @@ public class Task {
     public String name;
     public String description;
     public int idTask;
-    public String typeTask;//Task Subtask Epic
+    public String typeTask;
     public Status status;
 
     public Task(String name, String description, Status status, int idTask) {
