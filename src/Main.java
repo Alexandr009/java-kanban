@@ -6,7 +6,11 @@ public class Main {
     static Scanner scanner;
     static TaskManager taskManager;
     static HistoryManager historyManager;
-
+    public static final String FILE = "file.txt";
+    /*
+    в мейне создаем статическую переменную к файлу
+    в файл менеджере создаем loadFromFile и в негопередаем файл.
+    */
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
         HashMap<Integer, ArrayList<Task>> taskOdject = new HashMap<>();

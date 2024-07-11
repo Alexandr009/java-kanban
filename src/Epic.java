@@ -4,7 +4,7 @@ public class Epic extends Task {
 
     public Epic(String name, String description, Status status, int id) {
         super(name, description, status, id);
-        typeTask = "Epic";
+        typeTask = TaskType.TASK;//"Epic";
         this.subTask = new ArrayList<Subtask>();
     }
     @Override
