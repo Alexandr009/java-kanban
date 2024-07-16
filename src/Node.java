@@ -2,7 +2,7 @@ public class Node {
     int taskId;
     public String name;
     public String description;
-    public TaskType typeTask;//public String typeTask;
+    public TaskType typeTask;
     public Status status;
     Node prev;
     Node next;
