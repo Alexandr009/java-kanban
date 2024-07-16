@@ -1,3 +1,5 @@
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.ArrayList;
 public class Task extends ArrayList<Task> {
@@ -6,6 +8,8 @@ public class Task extends ArrayList<Task> {
     public int idTask;
     public TaskType typeTask;
     public Status status;
+    public Duration duration;
+    public LocalDateTime startTime;
 
     public Task(String name, String description, Status status, int idTask) {
         this.name = name;
@@ -15,14 +19,31 @@ public class Task extends ArrayList<Task> {
         this.idTask = idTask;
     }
 
+    public LocalDateTime getEndTime(){
+        ////дата и время завершения задачи, которые рассчитываются исходя из startTime и duration.
+        //duration = Duration.between(this.startTime,LocalDateTime.now());
+        long durationMin = duration.getSeconds() / 60;
+        LocalDateTime endTime = startTime.plusMinutes(durationMin);
+        return endTime;
+    }
+    public void setStartTime(){
+        this.startTime = LocalDateTime.now();
+    }
+    public void setDuration(){
+        this.duration = Duration.between(this.startTime,LocalDateTime.now());
+    }
+
     @Override
     public String toString() {
+        LocalDateTime endTime = getEndTime();
         return "Task{" +
                 "id='" + idTask + '\'' +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", typeTask='" + typeTask + '\'' +
-                ", status=" + status +
+                ", status=" + status + '\'' +
+                ", startTime=" + startTime + '\'' +
+                ", endTime=" + endTime +
                 '}';
     }
 

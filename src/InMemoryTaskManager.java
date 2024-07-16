@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class InMemoryTaskManager implements TaskManager {
         System.out.println("" + subtask);
         listSubtask.put(counter, subtask);
         listEpic.get(idEpic).subTask.add(subtask);
+
         return counter;
     }
 
@@ -71,6 +73,20 @@ public class InMemoryTaskManager implements TaskManager {
                 }
             }
         }
+
+        //
+        if (status.equals(Status.IN_PROGRESS)){
+            listSubtask.get(id).setStartTime();
+            System.out.println("testSubtask = " + listSubtask.get(id).startTime);
+        }
+        if (status.equals(Status.DONE)){
+            listSubtask.get(id).setDuration();
+            LocalDateTime test = listSubtask.get(id).getEndTime();
+            System.out.println("testSubtask = " + test);
+        }
+        //
+
+
         if (checkSameStatus == true) {
             Epic epicUpdated = updateEpicStatus(idEpic, status);
             System.out.println("epicUpdated = " + epicUpdated);
@@ -130,6 +146,17 @@ public class InMemoryTaskManager implements TaskManager {
     public Epic updateEpicStatus(int id, Status status) {
         Epic epic = listEpic.get(id);
         epic.status = status;
+
+        if (status.equals(Status.IN_PROGRESS)){
+            listEpic.get(id).setStartTime();
+            System.out.println("testEpic = " + listEpic.get(id).startTime);
+        }
+        if (status.equals(Status.DONE)){
+            listEpic.get(id).setDuration();
+            LocalDateTime test = listEpic.get(id).getEndTime();
+            System.out.println("testEpic = " + test);
+        }
+
         return epic;
     }
     ///////////////////Task///////////////////////////////
@@ -166,6 +193,15 @@ public class InMemoryTaskManager implements TaskManager {
         listTask.get(id).name = name;
         listTask.get(id).description = description;
         listTask.get(id).status = status;
+        if (status.equals(Status.IN_PROGRESS)){
+            listTask.get(id).setStartTime();
+            System.out.println("testTime = " + listTask.get(id).startTime);
+        }
+        if (status.equals(Status.DONE)){
+            listTask.get(id).setDuration();
+            LocalDateTime test = listTask.get(id).getEndTime();
+            System.out.println("testTime = " + test);
+        }
     }
 
     @Override
