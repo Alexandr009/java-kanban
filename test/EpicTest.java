@@ -28,7 +28,7 @@ public class EpicTest {
 
     @Test
     void checkToString(){
-        String taskParent = "Epic{id='1'name='Epic', description='description', typeTask='Epic', status=NEW', subtask=[]'}";
+        String taskParent = "Epic{id='1'name='Epic', description='description', typeTask='EPIC', status=NEW', subtask=[]'}";
         assertEquals(epic.toString(), taskParent, "Задачи не совпадают.");
     }
 }

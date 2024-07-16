@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -6,18 +7,21 @@ public class Main {
     static Scanner scanner;
     static TaskManager taskManager;
     static HistoryManager historyManager;
-    public static final String FILE = "file.txt";
-    /*
-    в мейне создаем статическую переменную к файлу
-    в файл менеджере создаем loadFromFile и в негопередаем файл.
-    */
-    public static void main(String[] args) {
+    static FileBackedTaskManager taskManagerBacked;
+    public static final String FILE = "C:/Users/Aleksandr.Abramovich/javaTrening/task-manager/source/file.txt";
+
+    public static void main(String[] args) throws IOException {
         scanner = new Scanner(System.in);
-        HashMap<Integer, ArrayList<Task>> taskOdject = new HashMap<>();
-        HashMap<Integer, ArrayList<Epic>> epicOdject = new HashMap<>();
-        HashMap<Integer, ArrayList<Subtask>> subtaskOdject = new HashMap<>();
+        HashMap<Integer, Task> taskOdject = new HashMap<>();
+        HashMap<Integer, Epic> epicOdject = new HashMap<>();
+        HashMap<Integer, Subtask> subtaskOdject = new HashMap<>();
+
+        taskManagerBacked = new FileBackedTaskManager(taskOdject, epicOdject, subtaskOdject);
+        taskManagerBacked = FileBackedTaskManager.loadFromFile(FILE);
+
         taskManager =  Managers.getDefault(taskOdject, epicOdject, subtaskOdject);
         historyManager = Managers.getDefaultHistory();
+
 
         while (true) {
             printMenu();
@@ -124,7 +128,6 @@ public class Main {
             }
 
         }
-
     }
 
     private static void printMenu() {
@@ -187,12 +190,12 @@ public class Main {
     }
 
     private static void addTask(String name, String description, Status status) {
-        int idNew = taskManager.addTask(name, description, status);
+        int idNew = taskManagerBacked.addTask(name, description, status);
         System.out.println("идентификатор = " + idNew);
     }
 
     private static void addEpic(String name, String description, Status status) {
-        int idNew = taskManager.addEpic(name, description, status);
+        int idNew = taskManagerBacked.addEpic(name, description, status);
         System.out.println("идентификатор = " + idNew);
     }
 
@@ -213,7 +216,7 @@ public class Main {
     }
 
     private static void addSubtask(String name, String description, Status status, int idEpic) {
-        int idNew = taskManager.addSubtask(name, description, status, idEpic);
+        int idNew = taskManagerBacked.addSubtask(name, description, status, idEpic);
         System.out.println("идентификатор = " + idNew);
     }
 

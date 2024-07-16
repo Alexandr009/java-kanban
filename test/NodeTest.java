@@ -12,7 +12,7 @@ public class NodeTest {
     @BeforeAll
     static void beforeAll(){
         int counter = 1;
-        node = new Node(counter,"nameTask", "description","Task",Status.NEW);
+        node = new Node(counter,"nameTask", "description",TaskType.TASK,Status.NEW);
     }
 
     @Test
