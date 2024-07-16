@@ -28,7 +28,7 @@ public class SubtaskTest {
 
     @Test
     void checkToString(){
-        String taskParent = "Subtask{id='2'name='Subtask', description='description', typeTask='Subtask', status=NEW', idEpic=1'}";
+        String taskParent = "Subtask{id='2'name='Subtask', description='description', typeTask='SUBTASK', status=NEW', idEpic=1'}";
         assertEquals(subtask.toString(), taskParent, "Задачи не совпадают.");
     }
 }

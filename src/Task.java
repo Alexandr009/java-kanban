@@ -1,16 +1,16 @@
 import java.util.Objects;
 import java.util.ArrayList;
-public class Task {
+public class Task extends ArrayList<Task> {
     public String name;
     public String description;
     public int idTask;
-    public String typeTask;//Task Subtask Epic
+    public TaskType typeTask;
     public Status status;
 
     public Task(String name, String description, Status status, int idTask) {
         this.name = name;
         this.description = description;
-        this.typeTask = "Task";
+        this.typeTask = TaskType.TASK;
         this.status = status;
         this.idTask = idTask;
     }

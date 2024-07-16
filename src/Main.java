@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -6,14 +7,21 @@ public class Main {
     static Scanner scanner;
     static TaskManager taskManager;
     static HistoryManager historyManager;
+    static FileBackedTaskManager taskManagerBacked;
+    public static final String FILE = "C:/Users/Aleksandr.Abramovich/javaTrening/task-manager/source/file.txt";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         scanner = new Scanner(System.in);
-        HashMap<Integer, ArrayList<Task>> taskOdject = new HashMap<>();
-        HashMap<Integer, ArrayList<Epic>> epicOdject = new HashMap<>();
-        HashMap<Integer, ArrayList<Subtask>> subtaskOdject = new HashMap<>();
+        HashMap<Integer, Task> taskOdject = new HashMap<>();
+        HashMap<Integer, Epic> epicOdject = new HashMap<>();
+        HashMap<Integer, Subtask> subtaskOdject = new HashMap<>();
+
+        taskManagerBacked = new FileBackedTaskManager(taskOdject, epicOdject, subtaskOdject);
+        taskManagerBacked = FileBackedTaskManager.loadFromFile(FILE);
+
         taskManager =  Managers.getDefault(taskOdject, epicOdject, subtaskOdject);
         historyManager = Managers.getDefaultHistory();
+
 
         while (true) {
             printMenu();
@@ -22,7 +30,7 @@ public class Main {
             switch (command) {
                 case 1:
                     HashMap<Integer, Task> listTask = taskManager.getAllTask();
-                    System.out.println("Task :" + listTask);
+                    System.out.println(String.format("Task :%s",listTask));
                     break;
                 case 2:
                     System.out.println("Введите название задачи");
@@ -35,7 +43,7 @@ public class Main {
                     System.out.println("Введите идентификатор задачи");
                     int id = scanner.nextInt();
                     Task task = taskManager.getTask(id);
-                    System.out.println("task = " + task);
+                    System.out.println(String.format("task = %s",task));
                     break;
                 case 4:
                     taskManager.deleteAllTask();
@@ -62,14 +70,14 @@ public class Main {
                     System.out.println("Введите идентификатор epic");
                     int idEpic = scanner.nextInt();
                     Epic epic = taskManager.getEpic(idEpic);
-                    System.out.println("epic = " + epic);
+                    System.out.println(String.format("epic = %s",epic));
                     break;
                 case 10:
                     taskManager.deleteAllEpic();
                     break;
                 case 11:
                     HashMap<Integer, Epic> listEpic = taskManager.getAllEpic();
-                    System.out.println("Epic :" + listEpic);
+                    System.out.println(String.format("Epic :%s",listEpic));
                     break;
                 case 12:
                     updateEpic();
@@ -80,7 +88,7 @@ public class Main {
                 case 14:
                     System.out.println("Введите идентификатор Epic");
                     Epic epicSubtask = taskManager.getEpic(scanner.nextInt());
-                    System.out.println("epic list Subtasks -" + epicSubtask);
+                    System.out.println(String.format("epic list Subtasks -%s",epicSubtask));
                     break;
                 case 15:
                     System.out.println("Введите название Subtask");
@@ -94,7 +102,7 @@ public class Main {
                 case 16:
                     System.out.println("Введите идентификатор Subtask");
                     Subtask subtask = taskManager.getSubtask(scanner.nextInt());
-                    System.out.println("subtask = " + subtask);
+                    System.out.println(String.format("subtask = %s",subtask));
                     break;
 
                 case 17:
@@ -102,7 +110,7 @@ public class Main {
                     break;
                 case 18:
                     HashMap<Integer, Subtask> listSubtask = taskManager.getAllSubtask();
-                    System.out.println("Subtask :" + listSubtask);
+                    System.out.println(String.format("Subtask :%s",listSubtask));
                     break;
                 case 19:
                     updateSubtask();
@@ -113,14 +121,13 @@ public class Main {
                     break;
                 case 21:
                     List<Task> listHistory = historyManager.getHistory();
-                    System.out.println("listHistory = " + listHistory);
+                    System.out.println(String.format("listHistory = %s",listHistory));
                     break;
                 case 0:
                     return;
             }
 
         }
-
     }
 
     private static void printMenu() {
@@ -183,13 +190,13 @@ public class Main {
     }
 
     private static void addTask(String name, String description, Status status) {
-        int idNew = taskManager.addTask(name, description, status);
-        System.out.println("идентификатор = " + idNew);
+        int idNew = taskManagerBacked.addTask(name, description, status);
+        System.out.println(String.format("идентификатор = %s",idNew));
     }
 
     private static void addEpic(String name, String description, Status status) {
-        int idNew = taskManager.addEpic(name, description, status);
-        System.out.println("идентификатор = " + idNew);
+        int idNew = taskManagerBacked.addEpic(name, description, status);
+        System.out.println(String.format("идентификатор = %s",idNew));
     }
 
     private static void deleteEpicRecord(int id) {
@@ -209,7 +216,7 @@ public class Main {
     }
 
     private static void addSubtask(String name, String description, Status status, int idEpic) {
-        int idNew = taskManager.addSubtask(name, description, status, idEpic);
+        int idNew = taskManagerBacked.addSubtask(name, description, status, idEpic);
         System.out.println("идентификатор = " + idNew);
     }
 
@@ -237,7 +244,7 @@ public class Main {
                 break;
         }
         Subtask subtask = taskManager.updateSubtask(id, name, description, newStatus);
-        System.out.println("subtask = " + subtask);
+        System.out.println(String.format("subtask = %s",subtask));
     }
 
     private static void deleteSubtaskRecord(int id) {

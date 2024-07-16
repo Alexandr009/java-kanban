@@ -1,0 +1,13 @@
+idTask,name,description,typeTask,status,epicId
+1,qqq,sdsdsd,TASK,NEW,
+4,mmmm,nnnnn,TASK,NEW,
+5,qqqqqqq,wwwwwwwwww,TASK,NEW,
+6,[[[[[,]]]]]],TASK,NEW,
+8,fffffffffffffffff,gggggggggg,TASK,NEW,
+9,t1,t2,TASK,NEW,
+10,qqq,ww,TASK,NEW,
+11,qqqq,wwww,TASK,NEW,
+12,eeee,eee,TASK,NEW,
+2,ffffff,ggggggggg,EPIC,NEW,
+7,1qq,2ww,EPIC,NEW,
+3,zzzzz,xxxxx,SUBTASK,NEW,2

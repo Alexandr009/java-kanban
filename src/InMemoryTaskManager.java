@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -15,6 +16,10 @@ public class InMemoryTaskManager implements TaskManager {
         this.listSubtask = listSubtask;
          historyManager = Managers.getDefaultHistory();
 
+    }
+
+    public InMemoryTaskManager() {
+        System.out.println("InMemoryTaskManager constructor = ");
     }
 
     ///////////////////Subtask////////////////////////////////////
@@ -75,6 +80,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteSubtask(int id) {
+        //delete Subtask in Epic
+        Subtask subtask = listSubtask.get(id);
+        Epic epic = listEpic.get(subtask.idEpic);
+        epic.subTask.remove(subtask);
         listSubtask.remove(id);
     }
 
