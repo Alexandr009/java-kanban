@@ -125,7 +125,7 @@ public class Main {
                     break;
                 case 22:
                     List<Task> listPrioritiTasks = taskManager.getPrioritizedTasks();
-                    System.out.println("Prioritized Tasks = " + listPrioritiTasks);
+                    System.out.println(String.format("Prioritized Tasks = %s",listPrioritiTasks));
                     break;
                 case 0:
                     return;
@@ -136,29 +136,29 @@ public class Main {
 
     private static void printMenu() {
         System.out.println("Выберите команду:");
-       // System.out.println("1 - Показать список всех Таск");
+        System.out.println("1 - Показать список всех Таск");
         System.out.println("2 - Добавить новою Таск");
         System.out.println("3 - Показать Таск по идентификатору");
-       // System.out.println("4 - Удалить все Таск");
-       // System.out.println("5 - Показать все Таск");
+        System.out.println("4 - Удалить все Таск");
+        System.out.println("5 - Показать все Таск");
         System.out.println("6 - Обновить Таск по идентификатору");
-       // System.out.println("7 - Удалить Таск по идентификатору");
+        System.out.println("7 - Удалить Таск по идентификатору");
         /////////////////////////////////////////
         System.out.println("8 - Добавить новою Epic");
         System.out.println("9 - Показать Epic по идентификатору");
-       // System.out.println("10 - Удалить все Epic");
-        //System.out.println("11 - Показать все Epic");
+        System.out.println("10 - Удалить все Epic");
+        System.out.println("11 - Показать все Epic");
         System.out.println("12 - Обновить Epic");
-       // System.out.println("13 - Удалить Epic по идентификатору");
+        System.out.println("13 - Удалить Epic по идентификатору");
         System.out.println("14 - Получить все Subtask по идентификатору Epic");
         /////////////////////////////////////////
         System.out.println("15 - Добавить новою Subtask");
         System.out.println("16 - Показать Subtask по идентификатору");
-        //System.out.println("17 - Удалить все Subtask");
-       // System.out.println("18 - Показать все Subtask");
+        System.out.println("17 - Удалить все Subtask");
+        System.out.println("18 - Показать все Subtask");
         System.out.println("19 - Обновить Subtask");
         System.out.println("20 - Удалить Subtask по идентификатору");
-        //System.out.println("21 - История просмотров задач");
+        System.out.println("21 - История просмотров задач");
         System.out.println("22 - Список задач в порядке приоритета");
         ///////////////////////////////////////
         System.out.println("0 - Выход");

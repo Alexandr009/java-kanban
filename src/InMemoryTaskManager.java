@@ -66,17 +66,15 @@ public class InMemoryTaskManager implements TaskManager {
                 .map(s->s.status)//Используем map(s -> s.status) для получения потока статусов подзадач.
                 .distinct()//Используем distinct() для удаления дубликатов статусов.
                 .count() == 1;//Если количество уникальных статусов равно 1, то все подзадачи имеют одинаковый статус.
-        //
+
         if (status.equals(Status.IN_PROGRESS) && listSubtask.get(id).startTime == null){
             listSubtask.get(id).setStartTime();
         }
         if (status.equals(Status.DONE)){
             listSubtask.get(id).setDuration();
             prioritizedTasks.remove(listSubtask.get(id));
-            //LocalDateTime test = listSubtask.get(id).getEndTime();
-            //System.out.println("testSubtask = " + test);
         }
-        //
+
 
 
         if (checkSameStatus == true) {
@@ -148,8 +146,6 @@ public class InMemoryTaskManager implements TaskManager {
         }
         if (status.equals(Status.DONE)){
             listEpic.get(id).setDuration();
-            // LocalDateTime test = listEpic.get(id).getEndTime();
-          //  System.out.println("testEpic = " + test);
         }
 
         return epic;
@@ -221,11 +217,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
      public boolean checkTaskStartTime(Task existingTask, Task newTask){
          LocalDateTime existingTaskStart = existingTask.startTime;
-         //LocalDateTime existingTaskEnd = existingTask.getEndTime();
 
          LocalDateTime newTaskStart = newTask.startTime;
-         //LocalDateTime newTaskEnd = newTask.getEndTime();
-//boolean check = existingTaskStart.isBefore(existingTaskEnd) && newTaskStart.isBefore(newTaskEnd);
          // Проверка на пересечение интервалов
          boolean check = existingTaskStart.isBefore(newTaskStart) ;
          return check;

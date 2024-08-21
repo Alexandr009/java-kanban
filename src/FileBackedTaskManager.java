@@ -124,7 +124,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
 
         List<String> lines = new ArrayList<>();
-        //lines.add("idTask,name,description,typeTask,status,epicId");
         lines.add("idTask,name,description,typeTask,status,epicId,startTime,duration");
         lines.addAll(
                 listTask.values().stream()
@@ -142,16 +141,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                         .collect(Collectors.toList())  // Собираем результат в список
         );
 
-        /*
-        for (Task task : listTask.values()) {
-            lines.add(toString(task));
-        }
-        for (Task task : listEpic.values()) {
-            lines.add(toString(task));
-        }
-        for (Subtask task : listSubtask.values()) {
-            lines.add(toString(task));
-        }*/
         try {
             Files.write(taskFile, lines, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e){
@@ -165,7 +154,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 task.startTime != null ? task.startTime.toString() : "", // пустая строка вместо null
                 task.duration != null ? task.duration.toString() : "",
                 "");
-        //return String.join(",", String.valueOf(task.idTask), task.name, task.description, String.valueOf(task.typeTask), task.status.toString(),task.startTime.toString(),task.duration.toString(), "");
     }
 
     private String toString(Epic task) {

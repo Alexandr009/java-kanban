@@ -20,8 +20,6 @@ public class Task extends ArrayList<Task> {
     }
 
     public LocalDateTime getEndTime(){
-        ////дата и время завершения задачи, которые рассчитываются исходя из startTime и duration.
-        //duration = Duration.between(this.startTime,LocalDateTime.now());
         long durationMin = duration.getSeconds() / 60;
         LocalDateTime endTime = startTime.plusMinutes(durationMin);
         return endTime;
@@ -59,16 +57,6 @@ public class Task extends ArrayList<Task> {
         }
 
         return text;
-        //LocalDateTime endTime = getEndTime();
-       /* return "Task{" +
-                "id='" + idTask + '\'' +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", typeTask='" + typeTask + '\'' +
-                ", status=" + status + '\'' +
-                ", startTime=" + startTime + '\'' +
-                ", endTime=" + endTime +
-                '}';*/
     }
 
     @Override

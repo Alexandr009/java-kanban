@@ -23,16 +23,10 @@ public class Epic extends Task {
     @Override
     public LocalDateTime getEndTime(){
 
-//        Duration totalDuration =  this.subTask.stream()
-//                .map(tasks -> tasks.duration)
-//                .reduce(Duration.ZERO, Duration::plus);
-        //reduce суммирует все Duration, начиная с Duration.ZERO и используя метод Duration::plus.
         Optional<LocalDateTime> latestEndTime = this.subTask.stream()
                 .map(subtask -> subtask.startTime.plusMinutes(subtask.duration.getSeconds() / 60))
                 .max(Comparator.naturalOrder());
 
-        //long durationMin = totalDuration.getSeconds() / 60;
-        //LocalDateTime endTime = startTime.plusMinutes(durationMin);
         endTime = latestEndTime.get();
         return endTime;
     }
