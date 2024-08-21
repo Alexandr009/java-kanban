@@ -35,8 +35,32 @@ public class Task extends ArrayList<Task> {
 
     @Override
     public String toString() {
-        LocalDateTime endTime = getEndTime();
-        return "Task{" +
+        String text = "";
+        if(this.status != Status.DONE ) {
+            text = "Task{" +
+                    "id='" + idTask + '\'' +
+                    "name='" + name + '\'' +
+                    ", description='" + description + '\'' +
+                    ", typeTask='" + typeTask + '\'' +
+                    ", status=" + status + '\'' +
+                    ", startTime=" + startTime + '\'' +
+                    '}';
+        } else if (this.status == Status.DONE) {
+            LocalDateTime endTime = getEndTime();
+            text = "Task{" +
+                    "id='" + idTask + '\'' +
+                    "name='" + name + '\'' +
+                    ", description='" + description + '\'' +
+                    ", typeTask='" + typeTask + '\'' +
+                    ", status=" + status + '\'' +
+                    ", startTime=" + startTime + '\'' +
+                    ", endTime=" + endTime +
+                    '}';
+        }
+
+        return text;
+        //LocalDateTime endTime = getEndTime();
+       /* return "Task{" +
                 "id='" + idTask + '\'' +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
@@ -44,7 +68,7 @@ public class Task extends ArrayList<Task> {
                 ", status=" + status + '\'' +
                 ", startTime=" + startTime + '\'' +
                 ", endTime=" + endTime +
-                '}';
+                '}';*/
     }
 
     @Override

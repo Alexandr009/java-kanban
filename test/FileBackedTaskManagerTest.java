@@ -6,8 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.nio.file.StandardOpenOption;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FileBackedTaskManagerTest {
     static HashMap<Integer, Task> listTask;
@@ -82,4 +82,52 @@ public class FileBackedTaskManagerTest {
         assertNotEquals(false,isEmpty > 50,"Файл пустой.");
         tempFile.deleteOnExit();
     }
+
+    @Test
+    void checkEpicInSubtask() throws IOException {
+
+        Path tempFilePath = Files.createTempFile("temp_task_manager", ".txt");
+        File tempFile = tempFilePath.toFile();
+
+        String testData = "idTask,name,description,typeTask,status,epicId\n" +
+                "1,name1,description1,TASK,NEW,\n" +
+                "4,name2,description2,TASK,NEW,\n" +
+                "5,name3,description3,TASK,NEW,\n" +
+                "6,name4,description4,TASK,NEW,\n" +
+                "2,name5,description5,EPIC,NEW,\n" +
+                "7,name6,description6,EPIC,NEW,\n" +
+                "3,name7,description7,SUBTASK,NEW,2";
+        Files.writeString(tempFilePath, testData);
+
+
+        taskManagerBacked = FileBackedTaskManager.loadFromFile(tempFile.getAbsolutePath());
+        HashMap<Integer, Task> listTaskTest = taskManagerBacked.getAllTask();
+        HashMap<Integer, Epic> listEpicTest = taskManagerBacked.getAllEpic();
+        HashMap<Integer, Subtask> listSubtaskTest = taskManagerBacked.getAllSubtask();
+        assertEquals(listEpicTest.get(2).idTask, listSubtaskTest.get(3).idEpic, "В подзадаче нет эпика.");
+
+        tempFile.deleteOnExit();
+    }
+
+    @Test
+    void testAddTaskDoesNotThrowException() {
+        assertDoesNotThrow(() -> {
+            FileBackedTaskManager taskManagerBacked = new FileBackedTaskManager(new HashMap<>(), new HashMap<>(), new HashMap<>());
+            taskManagerBacked.addTask("Task Name", "Task Description", Status.NEW);
+        }, "Добавление задачи не должно выбрасывать никаких исключений.");
+    }
+
+    @Test
+    void testSaveFileThrowsException() {
+        assertThrows(ManagerSaveException.class, () -> {
+            Path tempFilePath = Files.createTempFile("temp_task_manager_invalid", ".txt");
+            tempFilePath.toFile().setReadOnly();
+
+            FileBackedTaskManager taskManagerBacked = new FileBackedTaskManager(new HashMap<>(), new HashMap<>(), new HashMap<>());
+            taskManagerBacked.saveFile(tempFilePath.toString());
+        }, "Ожидается исключение ManagerSaveException при попытке сохранения в файл, доступный только для чтения.");
+    }
+
+
+
 }

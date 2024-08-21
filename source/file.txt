@@ -1,7 +1,2 @@
-idTask,name,description,typeTask,status,epicId
-1,qqq,sdsdsd,TASK,NEW,
-2,111,222,TASK,NEW,
-3,oooo,iiiii,EPIC,NEW,
-4,4,44,EPIC,NEW,
-5,5,5,SUBTASK,NEW,4
-6,6,6,SUBTASK,NEW,4
+idTask,name,description,typeTask,status,epicId,startTime,duration
+11,Task Name,Task Description,TASK,NEW,,,

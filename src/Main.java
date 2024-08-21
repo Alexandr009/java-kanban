@@ -123,6 +123,10 @@ public class Main {
                     List<Task> listHistory = historyManager.getHistory();
                     System.out.println(String.format("listHistory = %s",listHistory));
                     break;
+                case 22:
+                    List<Task> listPrioritiTasks = taskManager.getPrioritizedTasks();
+                    System.out.println("Prioritized Tasks = " + listPrioritiTasks);
+                    break;
                 case 0:
                     return;
             }
@@ -153,8 +157,9 @@ public class Main {
         //System.out.println("17 - Удалить все Subtask");
        // System.out.println("18 - Показать все Subtask");
         System.out.println("19 - Обновить Subtask");
-       // System.out.println("20 - Удалить Subtask по идентификатору");
+        System.out.println("20 - Удалить Subtask по идентификатору");
         //System.out.println("21 - История просмотров задач");
+        System.out.println("22 - Список задач в порядке приоритета");
         ///////////////////////////////////////
         System.out.println("0 - Выход");
     }

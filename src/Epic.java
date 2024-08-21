@@ -6,6 +6,7 @@ import java.util.Optional;
 
 public class Epic extends Task {
     public ArrayList<Subtask> subTask;
+    public LocalDateTime endTime;
 
     public Epic(String name, String description, Status status, int id) {
         super(name, description, status, id);
@@ -32,7 +33,8 @@ public class Epic extends Task {
 
         //long durationMin = totalDuration.getSeconds() / 60;
         //LocalDateTime endTime = startTime.plusMinutes(durationMin);
-        return latestEndTime.get();
+        endTime = latestEndTime.get();
+        return endTime;
     }
     @Override
     public String toString() {
