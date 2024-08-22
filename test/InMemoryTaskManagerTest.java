@@ -182,7 +182,7 @@ public class InMemoryTaskManagerTest {
         int idSubtask1 =  inMemoryTaskManager.addSubtask("Subtask1", "description1", null,idFirstEpic);
         int idSubtask2 =  inMemoryTaskManager.addSubtask("Subtask2", "description2", Status.NEW,idFirstEpic);
         inMemoryTaskManager.updateSubtask(idSubtask1,"Subtask new","description new",Status.NEW);
-        assertEquals(Status.NEW, listEpic.get(idFirstEpic).status, "Статусы не совподают");
+        assertEquals(Status.NEW, listEpic.get(idFirstEpic).status, "Статусы не совпадают.");
     }
 
     @Test
@@ -196,7 +196,7 @@ public class InMemoryTaskManagerTest {
         inMemoryTaskManager.updateSubtask(idFirstSubtask,"Subtask new","description new",Status.DONE);
         inMemoryTaskManager.updateSubtask(idSubtask1,"Subtask new","description new",Status.DONE);
 
-        assertEquals(Status.DONE, listEpic.get(idFirstEpic).status, "Статусы не совподают");
+        assertEquals(Status.DONE, listEpic.get(idFirstEpic).status, "Статусы не совпадают.");
     }
     @Test
     void setEpicStatusNEWandDONE(){
@@ -205,7 +205,7 @@ public class InMemoryTaskManagerTest {
         inMemoryTaskManager.updateSubtask(idFirstSubtask,"Subtask new","description new",Status.IN_PROGRESS);
         inMemoryTaskManager.updateSubtask(idFirstSubtask,"Subtask new","description new",Status.DONE);
 
-        assertEquals(Status.NEW, listEpic.get(idFirstEpic).status, "Статусы не совподают");
+        assertEquals(Status.NEW, listEpic.get(idFirstEpic).status, "Статусы не совпадают.");
     }
 
     @Test
@@ -216,7 +216,7 @@ public class InMemoryTaskManagerTest {
         inMemoryTaskManager.updateSubtask(idFirstSubtask,"Subtask new","description new",Status.IN_PROGRESS);
         inMemoryTaskManager.updateSubtask(idSubtask1,"Subtask new","description new",Status.IN_PROGRESS);
 
-        assertEquals(Status.IN_PROGRESS, listEpic.get(idFirstEpic).status, "Статусы не совподают");
+        assertEquals(Status.IN_PROGRESS, listEpic.get(idFirstEpic).status, "Статусы не совпадают.");
     }
 
     @Test
