@@ -6,6 +6,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
@@ -18,9 +19,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public FileBackedTaskManager(HashMap<Integer, Task> taskMap, HashMap<Integer, Epic> epicMap, HashMap<Integer, Subtask> subtaskMap) throws IOException {
         super(taskMap,epicMap,subtaskMap);
 
-        this.listTask = taskMap;
-        this.listEpic = epicMap;
-        this.listSubtask = subtaskMap;
+        listTask = taskMap;
+        listEpic = epicMap;
+        listSubtask = subtaskMap;
 
     }
 
@@ -28,24 +29,26 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         Path taskFile = Path.of(File);
         List<String> lines = Files.readAllLines(taskFile);
 
-        for (int i = 1; i < lines.size(); i++) {
-            Task task = fromString(lines.get(i));
-            switch (task.typeTask) {
-                case TASK:
-                    listTask.put(task.idTask, task);
-                    break;
-                case EPIC:
-                    listEpic.put(task.idTask, (Epic) task);
-                    break;
-                case SUBTASK:
-                    listSubtask.put(task.idTask, (Subtask) task);
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value:" + task.typeTask);
-            }
-        }
-
         FileBackedTaskManager manager = null;
+        lines.stream()
+                .skip(1)  // Пропускаем первую строку (заголовок)
+                .map(FileBackedTaskManager::fromString)  // Преобразуем каждую строку в объект Task
+                .forEach(task -> {
+                    switch (task.typeTask) {
+                        case TASK:
+                            listTask.put(task.idTask, task);
+                            break;
+                        case EPIC:
+                            listEpic.put(task.idTask, (Epic) task);
+                            break;
+                        case SUBTASK:
+                            listSubtask.put(task.idTask, (Subtask) task);
+                            break;
+                        default:
+                            throw new IllegalStateException("Unexpected value: " + task.typeTask);
+                    }
+                });
+
         try {
             manager = new FileBackedTaskManager(listTask, listEpic, listSubtask);
         } catch (IOException e){
@@ -121,16 +124,23 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
 
         List<String> lines = new ArrayList<>();
-        lines.add("idTask,name,description,typeTask,status,epicId");
-        for (Task task : listTask.values()) {
-            lines.add(toString(task));
-        }
-        for (Task task : listEpic.values()) {
-            lines.add(toString(task));
-        }
-        for (Subtask task : listSubtask.values()) {
-            lines.add(toString(task));
-        }
+        lines.add("idTask,name,description,typeTask,status,epicId,startTime,duration");
+        lines.addAll(
+                listTask.values().stream()
+                        .map(this::toString)  // Применяем метод toString к каждому элементу
+                        .collect(Collectors.toList())  // Собираем результат в список
+        );
+        lines.addAll(
+                listEpic.values().stream()
+                        .map(this::toString)  // Применяем метод toString к каждому элементу
+                        .collect(Collectors.toList())  // Собираем результат в список
+        );
+        lines.addAll(
+                listSubtask.values().stream()
+                        .map(this::toString)  // Применяем метод toString к каждому элементу
+                        .collect(Collectors.toList())  // Собираем результат в список
+        );
+
         try {
             Files.write(taskFile, lines, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e){
@@ -140,15 +150,24 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     private String toString(Task task) {
-        return String.join(",", String.valueOf(task.idTask), task.name, task.description, String.valueOf(task.typeTask), task.status.toString(), "");
+        return String.join(",", String.valueOf(task.idTask), task.name, task.description, String.valueOf(task.typeTask), task.status.toString(),
+                task.startTime != null ? task.startTime.toString() : "", // пустая строка вместо null
+                task.duration != null ? task.duration.toString() : "",
+                "");
     }
 
     private String toString(Epic task) {
-        return String.join(",", String.valueOf(task.idTask), task.name, task.description,  String.valueOf(task.typeTask), task.status.toString(), "");
+        return String.join(",", String.valueOf(task.idTask), task.name, task.description,  String.valueOf(task.typeTask), task.status.toString(),
+                task.startTime != null ? task.startTime.toString() : "", // пустая строка вместо null
+                task.duration != null ? task.duration.toString() : "",
+                "");
     }
 
     private String toString(Subtask task) {
-        return String.join(",", String.valueOf(task.idTask), task.name, task.description,  String.valueOf(task.typeTask), task.status.toString(), String.valueOf(task.idEpic));
+        return String.join(",", String.valueOf(task.idTask), task.name, task.description,  String.valueOf(task.typeTask), task.status.toString(),
+                task.startTime != null ? task.startTime.toString() : "", // пустая строка вместо null
+                task.duration != null ? task.duration.toString() : "",
+                String.valueOf(task.idEpic));
     }
 
 

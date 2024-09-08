@@ -8,10 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EpicTest {
     static Epic epic;
+    static int counter;
 
     @BeforeAll
     static void beforeAll(){
-        int counter = 1;
+        counter = 1;
         epic = new Epic("Epic", "description", Status.NEW, counter);
     }
 
@@ -28,7 +29,9 @@ public class EpicTest {
 
     @Test
     void checkToString(){
-        String taskParent = "Epic{id='1'name='Epic', description='description', typeTask='EPIC', status=NEW', subtask=[]'}";
+        String taskParent = "Epic{id='1'name='Epic', description='description', typeTask='EPIC', status=NEW', subtask=[]', startTime=null'}";
         assertEquals(epic.toString(), taskParent, "Задачи не совпадают.");
     }
+
+
 }

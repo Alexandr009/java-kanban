@@ -34,7 +34,7 @@ public class TaskTest {
     }
     @Test
     void checkToString(){
-        String taskParent = "Task{id='1'name='Task', description='description', typeTask='TASK', status=NEW}";
+        String taskParent = "Task{id='1'name='Task', description='description', typeTask='TASK', status=NEW', startTime=null'}";
         assertEquals(task.toString(), taskParent, "Задачи не совпадают.");
     }
 

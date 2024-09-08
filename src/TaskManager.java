@@ -44,6 +44,8 @@ public interface TaskManager {
 
     void deleteTask(int id);
 
+    List<Task> getPrioritizedTasks();
+
     @Override
     String toString();
 }

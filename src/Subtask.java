@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 public class Subtask extends Task {
     public int idEpic;
 
@@ -10,15 +12,31 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-
-        return "Subtask{" +
+    String text = "";
+        if(this.status != Status.DONE ) {
+            text = "Subtask{" +
+                    "id='" + idTask + '\'' +
+                    "name='" + name + '\'' +
+                    ", description='" + description + '\'' +
+                    ", typeTask='" + typeTask + '\'' +
+                    ", status=" + status + '\'' +
+                    ", idEpic=" + idEpic + '\'' +
+                    ", startTime=" + startTime + '\'' +//
+                    '}';
+        } else if (this.status == Status.DONE) {
+            LocalDateTime endTime = getEndTime();
+            text = "Subtask{" +
                 "id='" + idTask + '\'' +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", typeTask='" + typeTask + '\'' +
                 ", status=" + status + '\'' +
                 ", idEpic=" + idEpic + '\'' +
-                '}';
+                    ", startTime=" + startTime + '\'' +
+                    ", endTime=" + endTime +
+                    '}';
+        }
 
+        return text;
     }
 }
