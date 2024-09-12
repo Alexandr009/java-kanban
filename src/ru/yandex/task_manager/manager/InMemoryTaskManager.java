@@ -1,3 +1,10 @@
+package ru.yandex.task_manager.manager;
+
+import ru.yandex.task_manager.task.Epic;
+import ru.yandex.task_manager.task.Status;
+import ru.yandex.task_manager.task.Subtask;
+import ru.yandex.task_manager.task.Task;
+
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
@@ -20,10 +27,10 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     public InMemoryTaskManager() {
-        System.out.println("InMemoryTaskManager constructor = ");
+        System.out.println("ru.yandex.task_manager.manager.InMemoryTaskManager constructor = ");
     }
 
-    ///////////////////Subtask////////////////////////////////////
+    ///////////////////ru.yandex.task_manager.task.Subtask////////////////////////////////////
     @Override
     public int addSubtask(String name, String description, Status status, int idEpic) {
         counter = counter + 1;
@@ -45,7 +52,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteAllSubtask() {
         listSubtask.clear();
-        System.out.println("Все Subtask удалены");
+        System.out.println("Все ru.yandex.task_manager.task.Subtask удалены");
     }
 
     @Override
@@ -89,7 +96,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteSubtask(int id) {
-        //delete Subtask in Epic
+        //delete ru.yandex.task_manager.task.Subtask in ru.yandex.task_manager.task.Epic
         Subtask subtask = listSubtask.get(id);
         Epic epic = listEpic.get(subtask.idEpic);
         epic.subTask.remove(subtask);
@@ -117,7 +124,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteAllEpic() {
         listEpic.clear();
-        System.out.println("Все Epic удалены");
+        System.out.println("Все ru.yandex.task_manager.task.Epic удалены");
     }
 
     @Override
@@ -150,7 +157,7 @@ public class InMemoryTaskManager implements TaskManager {
 
         return epic;
     }
-    ///////////////////Task///////////////////////////////
+    ///////////////////ru.yandex.task_manager.task.Task///////////////////////////////
 
     @Override
     public int addTask(String name, String description, Status status) {
@@ -170,14 +177,16 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTask(int id) {
         Task task = listTask.get(id);
-        historyManager.addTaskToHistory(task);
+        if (task != null){
+            historyManager.addTaskToHistory(task);
+        }
         return task;
     }
 
     @Override
     public void deleteAllTask() {
         listTask.clear();
-        System.out.println("Все Task удалены");
+        System.out.println("Все ru.yandex.task_manager.task.Task удалены");
     }
 
     @Override
@@ -208,6 +217,7 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> getPrioritizedTasks(){
         return new ArrayList<>(prioritizedTasks);
     }
+
 
     public boolean checkPrioritizedTasks(Task newTask){
         //Использует anyMatch() для проверки, пересекается ли хотя бы одна из существующих задач с новой.

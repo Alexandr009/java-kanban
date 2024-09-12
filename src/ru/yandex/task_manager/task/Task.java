@@ -1,3 +1,5 @@
+package ru.yandex.task_manager.task;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;

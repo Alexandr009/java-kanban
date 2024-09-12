@@ -1,3 +1,8 @@
+package ru.yandex.task_manager.manager;
+
+import ru.yandex.task_manager.task.Status;
+import ru.yandex.task_manager.task.TaskType;
+
 public class Node {
     int taskId;
     public String name;

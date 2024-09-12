@@ -1,4 +1,10 @@
-import java.io.File;
+package ru.yandex.task_manager.manager;
+
+import ru.yandex.task_manager.task.Epic;
+import ru.yandex.task_manager.task.Status;
+import ru.yandex.task_manager.task.Subtask;
+import ru.yandex.task_manager.task.Task;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,14 +31,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     }
 
-    static FileBackedTaskManager loadFromFile(String File) throws IOException {
+    public static FileBackedTaskManager loadFromFile(String File) throws IOException {
         Path taskFile = Path.of(File);
         List<String> lines = Files.readAllLines(taskFile);
 
         FileBackedTaskManager manager = null;
         lines.stream()
                 .skip(1)  // Пропускаем первую строку (заголовок)
-                .map(FileBackedTaskManager::fromString)  // Преобразуем каждую строку в объект Task
+                .map(FileBackedTaskManager::fromString)  // Преобразуем каждую строку в объект ru.yandex.task_manager.task.Task
                 .forEach(task -> {
                     switch (task.typeTask) {
                         case TASK:

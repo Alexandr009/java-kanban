@@ -1,4 +1,10 @@
-import java.time.Duration;
+package ru.yandex.task_manager.task;
+
+import ru.yandex.task_manager.task.Status;
+import ru.yandex.task_manager.task.Subtask;
+import ru.yandex.task_manager.task.Task;
+import ru.yandex.task_manager.task.TaskType;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -1,5 +1,6 @@
+package ru.yandex.task_manager.manager;
+
 import java.util.HashMap;
-import java.util.List;
 
 public final class Managers {
     public static HistoryManager historyManager;

@@ -1,11 +1,16 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.yandex.task_manager.manager.*;
+import ru.yandex.task_manager.task.Epic;
+import ru.yandex.task_manager.task.Status;
+import ru.yandex.task_manager.task.Subtask;
+import ru.yandex.task_manager.task.Task;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.nio.file.StandardOpenOption;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -113,7 +118,7 @@ public class FileBackedTaskManagerTest {
     void testAddTaskDoesNotThrowException() {
         assertDoesNotThrow(() -> {
             FileBackedTaskManager taskManagerBacked = new FileBackedTaskManager(new HashMap<>(), new HashMap<>(), new HashMap<>());
-            taskManagerBacked.addTask("Task Name", "Task Description", Status.NEW);
+            taskManagerBacked.addTask("ru.yandex.task_manager.task.Task Name", "ru.yandex.task_manager.task.Task Description", Status.NEW);
         }, "Добавление задачи не должно выбрасывать никаких исключений.");
     }
 
@@ -125,7 +130,7 @@ public class FileBackedTaskManagerTest {
 
             FileBackedTaskManager taskManagerBacked = new FileBackedTaskManager(new HashMap<>(), new HashMap<>(), new HashMap<>());
             taskManagerBacked.saveFile(tempFilePath.toString());
-        }, "Ожидается исключение ManagerSaveException при попытке сохранения в файл, доступный только для чтения.");
+        }, "Ожидается исключение ru.yandex.task_manager.manager.ManagerSaveException при попытке сохранения в файл, доступный только для чтения.");
     }
 
 

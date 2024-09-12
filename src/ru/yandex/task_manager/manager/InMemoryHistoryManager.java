@@ -1,11 +1,14 @@
+package ru.yandex.task_manager.manager;
+
+import ru.yandex.task_manager.task.Task;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Map;
 public class InMemoryHistoryManager implements HistoryManager{
     public List<Task> listHistory;
-    public final  Map<Integer,Node> taskMap = new HashMap<>();
+    public final  Map<Integer, Node> taskMap = new HashMap<>();
     private Node head;
     private Node tail;
     public InMemoryHistoryManager(){

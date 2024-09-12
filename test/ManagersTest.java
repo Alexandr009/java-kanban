@@ -1,4 +1,10 @@
 import org.junit.jupiter.api.Test;
+import ru.yandex.task_manager.task.Epic;
+import ru.yandex.task_manager.manager.HistoryManager;
+import ru.yandex.task_manager.manager.Managers;
+import ru.yandex.task_manager.manager.TaskManager;
+import ru.yandex.task_manager.task.Subtask;
+import ru.yandex.task_manager.task.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,3 +1,5 @@
+package ru.yandex.task_manager.manager;
+
 public class ManagerSaveException extends RuntimeException{
     public static final String MSG_SAVE = "Error saving";
     public static final String MSG_LOAD = "Error loading";

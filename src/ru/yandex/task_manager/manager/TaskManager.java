@@ -1,10 +1,16 @@
+package ru.yandex.task_manager.manager;
+
+import ru.yandex.task_manager.task.Epic;
+import ru.yandex.task_manager.task.Status;
+import ru.yandex.task_manager.task.Subtask;
+import ru.yandex.task_manager.task.Task;
+
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 
 public interface TaskManager {
     /////////////////Common////////////////////////////
-    ///////////////////Subtask////////////////////////////////////
+    ///////////////////ru.yandex.task_manager.task.Subtask////////////////////////////////////
     int addSubtask(String name, String description, Status status, int idEpic);
 
     Subtask getSubtask(int id);
@@ -45,6 +51,7 @@ public interface TaskManager {
     void deleteTask(int id);
 
     List<Task> getPrioritizedTasks();
+    //public boolean checkPrioritizedTasks();
 
     @Override
     String toString();

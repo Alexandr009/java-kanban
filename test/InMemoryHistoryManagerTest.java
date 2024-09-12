@@ -1,8 +1,9 @@
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.yandex.task_manager.manager.InMemoryHistoryManager;
+import ru.yandex.task_manager.task.Status;
+import ru.yandex.task_manager.task.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
