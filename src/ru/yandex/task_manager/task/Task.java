@@ -4,7 +4,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.ArrayList;
-public class Task extends ArrayList<Task> {
+public class Task {
+
     public String name;
     public String description;
     public int idTask;
@@ -67,6 +68,26 @@ public class Task extends ArrayList<Task> {
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
         return Objects.equals(name, task.name) && Objects.equals(description, task.description) && Objects.equals(typeTask, task.typeTask) && status == task.status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getIdTask() {
+        return idTask;
+    }
+
+    public TaskType getTypeTask() {
+        return typeTask;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
 }

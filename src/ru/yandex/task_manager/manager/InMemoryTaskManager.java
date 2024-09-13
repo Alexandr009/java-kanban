@@ -1,5 +1,6 @@
 package ru.yandex.task_manager.manager;
 
+import ru.yandex.task_manager.exception.NotFoundException;
 import ru.yandex.task_manager.task.Epic;
 import ru.yandex.task_manager.task.Status;
 import ru.yandex.task_manager.task.Subtask;
@@ -12,9 +13,9 @@ import java.util.ArrayList;
 public class InMemoryTaskManager implements TaskManager {
 
     public static int counter;
-    HashMap<Integer, Task> listTask;
-    HashMap<Integer, Subtask> listSubtask;
-    HashMap<Integer, Epic> listEpic;
+    public HashMap<Integer, Task> listTask;
+    public HashMap<Integer, Subtask> listSubtask;
+    public HashMap<Integer, Epic> listEpic;
 
     HistoryManager historyManager;
     private final TreeSet<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(task -> task.startTime));
@@ -45,6 +46,9 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask getSubtask(int id) {
         Subtask subtask = listSubtask.get(id);
+        if (subtask == null) {
+            throw new NotFoundException("Таск с " + id + " не найден");
+        }
         historyManager.addTaskToHistory(subtask);
         return subtask;
     }
@@ -52,7 +56,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteAllSubtask() {
         listSubtask.clear();
-        System.out.println("Все ru.yandex.task_manager.task.Subtask удалены");
+        System.out.println("Все Subtask удалены");
     }
 
     @Override
@@ -96,7 +100,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteSubtask(int id) {
-        //delete ru.yandex.task_manager.task.Subtask in ru.yandex.task_manager.task.Epic
+        Task task = listSubtask.get(id);
+        if (task == null) {
+            throw new NotFoundException("Таск с " + id + " не найден");
+        }
         Subtask subtask = listSubtask.get(id);
         Epic epic = listEpic.get(subtask.idEpic);
         epic.subTask.remove(subtask);
@@ -116,6 +123,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Epic getEpic(int id) {
+        Task task = listEpic.get(id);
+        if (task == null) {
+            throw new NotFoundException("Таск с " + id + " не найден");
+        }
         Epic epic = listEpic.get(id);
         historyManager.addTaskToHistory(epic);
         return epic;
@@ -134,6 +145,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteEpic(int id) {
+        Task task = listEpic.get(id);
+        if (task == null) {
+            throw new NotFoundException("Таск с " + id + " не найден");
+        }
         listEpic.remove(id);
     }
 
@@ -180,13 +195,16 @@ public class InMemoryTaskManager implements TaskManager {
         if (task != null){
             historyManager.addTaskToHistory(task);
         }
+        if (task == null) {
+            throw new NotFoundException("Таск с " + id + " не найден");
+        }
         return task;
     }
 
     @Override
     public void deleteAllTask() {
         listTask.clear();
-        System.out.println("Все ru.yandex.task_manager.task.Task удалены");
+        System.out.println("Все Task удалены");
     }
 
     @Override
@@ -209,6 +227,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteTask(int id) {
+        Task task = listTask.get(id);
+        if (task == null) {
+            throw new NotFoundException("Таск с " + id + " не найден");
+        }
         prioritizedTasks.remove(listTask.get(id));
         listTask.remove(id);
     }

@@ -55,4 +55,6 @@ public interface TaskManager {
 
     @Override
     String toString();
+
+    boolean checkPrioritizedTasks(Task task);
 }

@@ -15,7 +15,7 @@ public class EpicTest {
     @BeforeAll
     static void beforeAll(){
         counter = 1;
-        epic = new Epic("ru.yandex.task_manager.task.Epic", "description", Status.NEW, counter);
+        epic = new Epic("Epic", "description", Status.NEW, counter);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class EpicTest {
 
     @Test
     void checkToString(){
-        String taskParent = "ru.yandex.task_manager.task.Epic{id='1'name='ru.yandex.task_manager.task.Epic', description='description', typeTask='EPIC', status=NEW', subtask=[]', startTime=null'}";
+        String taskParent = "Epic{id='1'name='Epic', description='description', typeTask='EPIC', status=NEW', subtask=[]', startTime=null'}";
         assertEquals(epic.toString(), taskParent, "Задачи не совпадают.");
     }
 

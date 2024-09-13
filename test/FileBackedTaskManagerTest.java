@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.yandex.task_manager.exception.ManagerSaveException;
 import ru.yandex.task_manager.manager.*;
 import ru.yandex.task_manager.task.Epic;
 import ru.yandex.task_manager.task.Status;
@@ -130,7 +131,7 @@ public class FileBackedTaskManagerTest {
 
             FileBackedTaskManager taskManagerBacked = new FileBackedTaskManager(new HashMap<>(), new HashMap<>(), new HashMap<>());
             taskManagerBacked.saveFile(tempFilePath.toString());
-        }, "Ожидается исключение ru.yandex.task_manager.manager.ManagerSaveException при попытке сохранения в файл, доступный только для чтения.");
+        }, "Ожидается исключение ru.yandex.task_manager.exception.ManagerSaveException при попытке сохранения в файл, доступный только для чтения.");
     }
 
 

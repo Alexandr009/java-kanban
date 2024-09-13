@@ -37,7 +37,7 @@ public class Main {
             switch (command) {
                 case 1:
                     HashMap<Integer, Task> listTask = taskManager.getAllTask();
-                    System.out.println(String.format("ru.yandex.task_manager.task.Task :%s",listTask));
+                    System.out.println(String.format("Task :%s",listTask));
                     break;
                 case 2:
                     System.out.println("Введите название задачи");
@@ -67,9 +67,9 @@ public class Main {
                     deleteTaskRecord(idTask);
                     break;
                 case 8:
-                    System.out.println("Введите название task.Epic");
+                    System.out.println("Введите название Epic");
                     String nameEpic = scanner.next();
-                    System.out.println("Введите описание task.Epic");
+                    System.out.println("Введите описание Epic");
                     String descriptionEpic = scanner.next();
                     addEpic(nameEpic, descriptionEpic, Status.NEW);
                     break;
@@ -84,7 +84,7 @@ public class Main {
                     break;
                 case 11:
                     HashMap<Integer, Epic> listEpic = taskManager.getAllEpic();
-                    System.out.println(String.format("ru.yandex.task_manager.task.Epic :%s",listEpic));
+                    System.out.println(String.format("Epic :%s",listEpic));
                     break;
                 case 12:
                     updateEpic();
@@ -117,7 +117,7 @@ public class Main {
                     break;
                 case 18:
                     HashMap<Integer, Subtask> listSubtask = taskManager.getAllSubtask();
-                    System.out.println(String.format("ru.yandex.task_manager.task.Subtask :%s",listSubtask));
+                    System.out.println(String.format("Subtask :%s",listSubtask));
                     break;
                 case 19:
                     updateSubtask();

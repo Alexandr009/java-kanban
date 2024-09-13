@@ -1,4 +1,4 @@
-package ru.yandex.task_manager.manager;
+package ru.yandex.task_manager.exception;
 
 public class ManagerSaveException extends RuntimeException{
     public static final String MSG_SAVE = "Error saving";

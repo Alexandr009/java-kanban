@@ -1,5 +1,6 @@
 package ru.yandex.task_manager.http;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -7,6 +8,7 @@ import com.sun.net.httpserver.HttpExchange;
 import ru.yandex.task_manager.manager.TaskManager;
 import ru.yandex.task_manager.task.Epic;
 import ru.yandex.task_manager.task.Status;
+import ru.yandex.task_manager.task.Subtask;
 import ru.yandex.task_manager.task.Task;
 
 import java.io.BufferedReader;
@@ -15,6 +17,8 @@ import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SubtasksHttpHandler extends BaseHttpHandler {
 
@@ -26,74 +30,103 @@ public class SubtasksHttpHandler extends BaseHttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        switch (exchange.getRequestMethod()) {
-            case "GET": {
-                Integer id = getIdFromUrl(exchange.getRequestURI().getPath());
-                if (id == null) {
-                    HashMap<Integer, Epic> list = taskManager.getAllSubtask();
-                    sendText(exchange, list.toString(), 200);
-
-                } else {
-                    Task task = taskManager.getSubtask(id);
-                    sendText(exchange, task.toString(), 200);
-                }
-                break;
-            }
-            case "POST": {
-                //int id2 = taskManager.addSubtask("1", "11", Status.NEW,1);
-                StringBuilder bodyBuilder = new StringBuilder();
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8))) {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        bodyBuilder.append(line);
-                    }
-                }
-
-                String body = bodyBuilder.toString();
-
-                // Парсим JSON с использованием JsonElement и JsonObject
-                JsonElement jsonElement = JsonParser.parseString(body);
-                if (jsonElement.isJsonObject()) {
-                    JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    String name = jsonObject.get("name").getAsString();
-                    String description = jsonObject.get("description").getAsString();
-                    String statusStr = jsonObject.get("status").getAsString();
-                    String epicIdStr = jsonObject.get("epicId").getAsString();
-                    Integer epicId = Integer.valueOf(epicIdStr);
-
-                    // Преобразуем строковый статус в enum
-                    Status status = Status.valueOf(statusStr.toUpperCase()); // Предполагается, что статус передается в нижнем регистре
-
-                    // Сохраняем новую задачу
-                    int id = taskManager.addSubtask(name, description, status, epicId);
-
-                    // Возвращаем ответ
-                    String response = "{ \"id\": " + id + " }"; // Возвращаем ID созданной задачи
-                    sendText(exchange, response, 201);
-
-                }
-
-                break;
-            }
-            case "DELETE": {
-                Integer id = getIdFromUrl(exchange.getRequestURI().getPath());
-                if (id == null) {
-                    sendNotFound(exchange);
-                } else {
-                    Task task = taskManager.getEpic(id);
-                    if (task != null) {
-                        taskManager.deleteEpic(id);
-                        String response = "{ \"response\": \"Сабтаск удален\" }"; // Возвращаем ID созданной задачи
-                        sendText(exchange, response, 200);
+        try {
+            switch (exchange.getRequestMethod()) {
+                case "GET": {
+                    Integer id = getIdFromUrl(exchange.getRequestURI().getPath());
+                    if (id == null) {
+                        List<Subtask> list = (List<Subtask>) taskManager.getAllSubtask().values().stream().collect(Collectors.toList());
+                        // Преобразуем список задач в JSON
+                        Gson gson = getGson();
+                        String responsCovert = gson.toJson(list);
+                        sendText(exchange, responsCovert, 200);
                     } else {
-                        sendNotFound(exchange);
+                        Task task = taskManager.getSubtask(id);
+                        Gson gson = getGson();
+                        String covert = gson.toJson(task);
+                        sendText(exchange, covert, 200);
                     }
+                    break;
                 }
-                break;
+                case "POST": {
+                    //int id2 = taskManager.addSubtask("1", "11", Status.NEW,1);
+                    String body = readBody(exchange);
+
+                    // Парсим JSON с использованием JsonElement и JsonObject
+                    JsonElement jsonElement = JsonParser.parseString(body);
+                    if (jsonElement.isJsonObject()) {
+                        JsonObject jsonObject = jsonElement.getAsJsonObject();
+                        String name = jsonObject.get("name").getAsString();
+                        String description = jsonObject.get("description").getAsString();
+                        String status = jsonObject.get("status").getAsString();
+                        String epicIdStr = jsonObject.get("epicId").getAsString();
+                        Status newStatus = getStatusCode(String.valueOf(status));
+                        Integer epicId = Integer.valueOf(epicIdStr);
+
+                        Integer idPath = getIdFromUrl(exchange.getRequestURI().getPath());
+
+
+                        if (idPath == null) {
+
+                            int id = taskManager.addSubtask(name, description, newStatus, epicId);
+                            String response = "{ \"id\": " + id + " }"; // Возвращаем ID созданной задачи
+                            sendText(exchange, response, 201);
+
+                        } else {//updateTask
+                            Subtask subtask = taskManager.getSubtask(idPath);
+                            if (subtask != null) {
+                                //boolean check = taskManager.checkPrioritizedTasks(task);
+                                List<Task> listPrioritiz = taskManager.getPrioritizedTasks();
+
+                                if (listPrioritiz.size() == 0) {
+                                    taskManager.updateSubtask(idPath, name, description, newStatus);
+                                    String response = "{ \"id\": " + idPath + " }"; // Возвращаем ID созданной задачи
+                                    sendText(exchange, response, 200);
+
+                                } else {
+                                    Task taskPrioritiz = listPrioritiz.getFirst();
+                                    ;
+                                    if (taskPrioritiz.idTask == subtask.idTask) {
+                                        taskManager.updateSubtask(idPath, name, description, newStatus);
+                                        String response = "{ \"id\": " + idPath + " }"; // Возвращаем ID созданной задачи
+                                        sendText(exchange, response, 200);
+                                    } else {
+                                        sendHasInteractions(exchange);
+                                    }
+                                }
+
+                            } else {
+                                sendNotFound(exchange);
+                            }
+                        }
+
+                    }
+
+                    break;
+                }
+                case "DELETE": {
+                    Integer id = getIdFromUrl(exchange.getRequestURI().getPath());
+                    if (id == null) {
+                        sendNotFound(exchange);
+                    } else {
+                        Task task = taskManager.getEpic(id);
+                        if (task != null) {
+                            taskManager.deleteEpic(id);
+                            String response = "{ \"response\": \"Сабтаск удален\" }"; // Возвращаем ID созданной задачи
+                            sendText(exchange, response, 200);
+                        } else {
+                            sendNotFound(exchange);
+                        }
+                    }
+                    break;
+                }
+                default:
+                    throw new RuntimeException();
             }
-            default:
-                throw new RuntimeException();
+        } catch (Exception e) {
+            sendInternalServerError(exchange, e.getMessage());
         }
     }
+
 
 }

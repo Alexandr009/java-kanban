@@ -14,7 +14,7 @@ public class SubtaskTest {
     @BeforeAll
     static void beforeAll(){
         int counter = 2;
-        subtask = new Subtask("ru.yandex.task_manager.task.Subtask", "description", Status.NEW, counter,1);
+        subtask = new Subtask("Subtask", "description", Status.NEW, counter,1);
     }
 
     @Test
@@ -30,7 +30,7 @@ public class SubtaskTest {
 
     @Test
     void checkToString(){
-        String taskParent = "ru.yandex.task_manager.task.Subtask{id='2'name='ru.yandex.task_manager.task.Subtask', description='description', typeTask='SUBTASK', status=NEW', idEpic=1', startTime=null'}";
+        String taskParent = "Subtask{id='2'name='Subtask', description='description', typeTask='SUBTASK', status=NEW', idEpic=1', startTime=null'}";
         assertEquals(subtask.toString(), taskParent, "Задачи не совпадают.");
     }
 }

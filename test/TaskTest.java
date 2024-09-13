@@ -13,7 +13,7 @@ public class TaskTest {
     @BeforeAll
     static void beforeAll(){
         int counter = 1;
-        task = new Task("ru.yandex.task_manager.task.Task", "description", Status.NEW, counter);
+        task = new Task("Task", "description", Status.NEW, counter);
     }
 
     @Test
@@ -30,12 +30,12 @@ public class TaskTest {
     @Test
     void checkEqualsTask(){
         int counter = 2;
-        Task taskTwo = new Task("ru.yandex.task_manager.task.Task", "description", Status.NEW, counter);
+        Task taskTwo = new Task("Task", "description", Status.NEW, counter);
         assertTrue(taskTwo.equals(task));
     }
     @Test
     void checkToString(){
-        String taskParent = "ru.yandex.task_manager.task.Task{id='1'name='ru.yandex.task_manager.task.Task', description='description', typeTask='TASK', status=NEW', startTime=null'}";
+        String taskParent = "Task{id='1'name='Task', description='description', typeTask='TASK', status=NEW', startTime=null'}";
         assertEquals(task.toString(), taskParent, "Задачи не совпадают.");
     }
 
