@@ -68,7 +68,7 @@ public abstract class BaseHttpHandler implements HttpHandler {
 
        return bodyBuilder.toString();
    }
-    protected static Gson getGson(){
+    public static Gson getGson(){
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setPrettyPrinting();
         gsonBuilder.serializeNulls(); // Включает сериализацию null-значений

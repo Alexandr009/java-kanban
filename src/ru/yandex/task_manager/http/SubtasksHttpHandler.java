@@ -49,7 +49,6 @@ public class SubtasksHttpHandler extends BaseHttpHandler {
                     break;
                 }
                 case "POST": {
-                    //int id2 = taskManager.addSubtask("1", "11", Status.NEW,1);
                     String body = readBody(exchange);
 
                     // Парсим JSON с использованием JsonElement и JsonObject
@@ -59,7 +58,7 @@ public class SubtasksHttpHandler extends BaseHttpHandler {
                         String name = jsonObject.get("name").getAsString();
                         String description = jsonObject.get("description").getAsString();
                         String status = jsonObject.get("status").getAsString();
-                        String epicIdStr = jsonObject.get("epicId").getAsString();
+                        String epicIdStr = jsonObject.get("idEpic").getAsString();
                         Status newStatus = getStatusCode(String.valueOf(status));
                         Integer epicId = Integer.valueOf(epicIdStr);
 
@@ -75,7 +74,6 @@ public class SubtasksHttpHandler extends BaseHttpHandler {
                         } else {//updateTask
                             Subtask subtask = taskManager.getSubtask(idPath);
                             if (subtask != null) {
-                                //boolean check = taskManager.checkPrioritizedTasks(task);
                                 List<Task> listPrioritiz = taskManager.getPrioritizedTasks();
 
                                 if (listPrioritiz.size() == 0) {
@@ -109,14 +107,9 @@ public class SubtasksHttpHandler extends BaseHttpHandler {
                     if (id == null) {
                         sendNotFound(exchange);
                     } else {
-                        Task task = taskManager.getEpic(id);
-                        if (task != null) {
-                            taskManager.deleteEpic(id);
+                            taskManager.deleteSubtask(id);
                             String response = "{ \"response\": \"Сабтаск удален\" }"; // Возвращаем ID созданной задачи
                             sendText(exchange, response, 200);
-                        } else {
-                            sendNotFound(exchange);
-                        }
                     }
                     break;
                 }

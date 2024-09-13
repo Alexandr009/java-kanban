@@ -72,7 +72,6 @@ public class TasksHttpHandler extends BaseHttpHandler {
                         } else {//updateTask
                             Task task = taskManager.getTask(idPath);
                             if (task != null) {
-                                //boolean check = taskManager.checkPrioritizedTasks(task);
                                 List<Task> listPrioritiz = taskManager.getPrioritizedTasks();
                                 int idPrioritiz = listPrioritiz.get(idPath).idTask;
                                 if (listPrioritiz.size() > 0 && idPrioritiz != idPath) {

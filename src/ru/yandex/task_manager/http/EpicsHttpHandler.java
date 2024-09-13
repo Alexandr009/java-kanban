@@ -50,7 +50,6 @@ public class EpicsHttpHandler extends BaseHttpHandler {
                     break;
                 }
                 case "POST": {
-                    // int id2 = taskManager.addEpic("1", "11", Status.NEW);
                     String body = readBody(exchange);
 
                     // Парсим JSON с использованием JsonElement и JsonObject

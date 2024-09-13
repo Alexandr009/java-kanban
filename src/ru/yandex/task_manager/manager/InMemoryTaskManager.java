@@ -28,7 +28,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     public InMemoryTaskManager() {
-        System.out.println("ru.yandex.task_manager.manager.InMemoryTaskManager constructor = ");
+        System.out.println("InMemoryTaskManager constructor = ");
     }
 
     ///////////////////ru.yandex.task_manager.task.Subtask////////////////////////////////////
