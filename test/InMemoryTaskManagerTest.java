@@ -1,8 +1,11 @@
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.yandex.task_manager.task.Epic;
+import ru.yandex.task_manager.manager.InMemoryTaskManager;
+import ru.yandex.task_manager.task.Status;
+import ru.yandex.task_manager.task.Subtask;
+import ru.yandex.task_manager.task.Task;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +41,7 @@ public class InMemoryTaskManagerTest {
         String descriptionSubtask = "Test addNewSubtask description";
         idFirstSubtask =  inMemoryTaskManager.addSubtask(nameSubtask, descriptionSubtask, Status.NEW,idFirstEpic);
     }
-    ///////////////////////Task////////////////////////////////////////////////
+    ///////////////////////ru.yandex.task_manager.task.Task////////////////////////////////////////////////
     @Test
     void addNewTask() {
         String name = "Test addNewTask";
@@ -54,7 +57,7 @@ public class InMemoryTaskManagerTest {
         String description = "Test addNewTask description";
 
         Task taskFirst = inMemoryTaskManager.getTask(idFirstTask);
-        assertNotNull(taskFirst,"Task не найден.");
+        assertNotNull(taskFirst,"ru.yandex.task_manager.task.Task не найден.");
 
         Status newStatus = Status.IN_PROGRESS;
         inMemoryTaskManager.updateTask(idFirstTask, name, description, newStatus);
@@ -64,7 +67,7 @@ public class InMemoryTaskManagerTest {
     void deleteTaskRecord(){
 
         inMemoryTaskManager.deleteTask(idFirstTask);
-        assertNull(inMemoryTaskManager.listTask.get(idFirstTask),"Task не удален.");
+        assertNull(inMemoryTaskManager.listTask.get(idFirstTask),"ru.yandex.task_manager.task.Task не удален.");
     }
 
     @Test
@@ -83,29 +86,29 @@ public class InMemoryTaskManagerTest {
         HashMap<Integer, Task> list  = inMemoryTaskManager.getAllTask();
         assertEquals(2, list.size(), "Размер списка не совпадает.");
     }
-    ///////////////////////Epic////////////////////////////////////////////////
+    ///////////////////////ru.yandex.task_manager.task.Epic////////////////////////////////////////////////
     @Test
     void addNewEpic() {
-        String name = "Epic addNewTask";
-        String description = "Epic addNewTask description";
+        String name = "ru.yandex.task_manager.task.Epic addNewTask";
+        String description = "ru.yandex.task_manager.task.Epic addNewTask description";
         int idEpic =  inMemoryTaskManager.addEpic(name, description, Status.NEW);
-        assertNotNull(idEpic, "Epic не найден.");
+        assertNotNull(idEpic, "ru.yandex.task_manager.task.Epic не найден.");
     }
     @Test
     void getEpicUpdateEpic() {
 
-        String name = "Epic new name";
-        String description = "Epic addNewTask description";
+        String name = "ru.yandex.task_manager.task.Epic new name";
+        String description = "ru.yandex.task_manager.task.Epic addNewTask description";
         Epic epicFirst = inMemoryTaskManager.getEpic(idFirstEpic);
-        assertNotNull(epicFirst,"Epic не найден.");
+        assertNotNull(epicFirst,"ru.yandex.task_manager.task.Epic не найден.");
         inMemoryTaskManager.updateEpic(idFirstEpic, name, description);
-        assertEquals("Epic new name", inMemoryTaskManager.getEpic(idFirstEpic).name, "Имена не совпадают.");
+        assertEquals("ru.yandex.task_manager.task.Epic new name", inMemoryTaskManager.getEpic(idFirstEpic).name, "Имена не совпадают.");
     }
     @Test
     void deleteEpicRecord(){
 
         inMemoryTaskManager.deleteEpic(idFirstEpic);
-        assertNull(inMemoryTaskManager.listEpic.get(idFirstEpic),"Epic не удален.");
+        assertNull(inMemoryTaskManager.listEpic.get(idFirstEpic),"ru.yandex.task_manager.task.Epic не удален.");
     }
     @Test
     void deleteAllEpic(){
@@ -128,7 +131,7 @@ public class InMemoryTaskManagerTest {
         String name = "Test addNewSubtask";
         String description = "Test addNewSubtask description";
         int idSubtask =  inMemoryTaskManager.addSubtask(name, description, Status.NEW,idFirstEpic);
-        assertNotNull(idSubtask, "Subtask не найден.");
+        assertNotNull(idSubtask, "ru.yandex.task_manager.task.Subtask не найден.");
     }
     @Test
     void getSubtaskUpdateSubtaskUpdateStatusEpic(){
@@ -137,7 +140,7 @@ public class InMemoryTaskManagerTest {
         String description = "Test addNewSubtask description";
 
         Task subTaskFirst = inMemoryTaskManager.getSubtask(idFirstSubtask);
-        assertNotNull(subTaskFirst,"Task не найден.");
+        assertNotNull(subTaskFirst,"ru.yandex.task_manager.task.Task не найден.");
 
         Status newStatus = Status.IN_PROGRESS;
         inMemoryTaskManager.updateSubtask(idFirstSubtask, name, description, newStatus);
@@ -147,16 +150,16 @@ public class InMemoryTaskManagerTest {
     @Test
     void deleteSubtaskRecord(){
         inMemoryTaskManager.deleteSubtask(idFirstSubtask);
-        assertNull(inMemoryTaskManager.listSubtask.get(idFirstSubtask),"Task не удален.");
+        assertNull(inMemoryTaskManager.listSubtask.get(idFirstSubtask),"ru.yandex.task_manager.task.Task не удален.");
     }
     @Test
     void deleteSubtaskRecordCheckEpicSubtask(){
         Subtask subtask = listSubtask.get(idFirstSubtask);
         Epic epic = listEpic.get(subtask.idEpic);
         inMemoryTaskManager.deleteSubtask(idFirstSubtask);
-        assertNull(inMemoryTaskManager.listSubtask.get(idFirstSubtask),"Task не удален.");
+        assertNull(inMemoryTaskManager.listSubtask.get(idFirstSubtask),"ru.yandex.task_manager.task.Task не удален.");
         boolean check = epic.subTask.contains(subtask);
-        assertFalse(check,"Task не удален.");
+        assertFalse(check,"ru.yandex.task_manager.task.Task не удален.");
     }
 
     @Test
@@ -181,7 +184,7 @@ public class InMemoryTaskManagerTest {
         listEpic.get(idFirstEpic).status = null;
         int idSubtask1 =  inMemoryTaskManager.addSubtask("Subtask1", "description1", null,idFirstEpic);
         int idSubtask2 =  inMemoryTaskManager.addSubtask("Subtask2", "description2", Status.NEW,idFirstEpic);
-        inMemoryTaskManager.updateSubtask(idSubtask1,"Subtask new","description new",Status.NEW);
+        inMemoryTaskManager.updateSubtask(idSubtask1,"ru.yandex.task_manager.task.Subtask new","description new",Status.NEW);
         assertEquals(Status.NEW, listEpic.get(idFirstEpic).status, "Статусы не совпадают.");
     }
 
@@ -190,11 +193,11 @@ public class InMemoryTaskManagerTest {
         listEpic.get(idFirstEpic).status = null;
         int idSubtask1 =  inMemoryTaskManager.addSubtask("Subtask1", "description1", Status.NEW,idFirstEpic);
 
-        inMemoryTaskManager.updateSubtask(idFirstSubtask,"Subtask new","description new",Status.IN_PROGRESS);
-        inMemoryTaskManager.updateSubtask(idSubtask1,"Subtask new","description new",Status.IN_PROGRESS);
+        inMemoryTaskManager.updateSubtask(idFirstSubtask,"ru.yandex.task_manager.task.Subtask new","description new",Status.IN_PROGRESS);
+        inMemoryTaskManager.updateSubtask(idSubtask1,"ru.yandex.task_manager.task.Subtask new","description new",Status.IN_PROGRESS);
 
-        inMemoryTaskManager.updateSubtask(idFirstSubtask,"Subtask new","description new",Status.DONE);
-        inMemoryTaskManager.updateSubtask(idSubtask1,"Subtask new","description new",Status.DONE);
+        inMemoryTaskManager.updateSubtask(idFirstSubtask,"ru.yandex.task_manager.task.Subtask new","description new",Status.DONE);
+        inMemoryTaskManager.updateSubtask(idSubtask1,"ru.yandex.task_manager.task.Subtask new","description new",Status.DONE);
 
         assertEquals(Status.DONE, listEpic.get(idFirstEpic).status, "Статусы не совпадают.");
     }
@@ -202,8 +205,8 @@ public class InMemoryTaskManagerTest {
     void setEpicStatusNEWandDONE(){
         int idSubtask1 =  inMemoryTaskManager.addSubtask("Subtask1", "description1", Status.NEW,idFirstEpic);
 
-        inMemoryTaskManager.updateSubtask(idFirstSubtask,"Subtask new","description new",Status.IN_PROGRESS);
-        inMemoryTaskManager.updateSubtask(idFirstSubtask,"Subtask new","description new",Status.DONE);
+        inMemoryTaskManager.updateSubtask(idFirstSubtask,"ru.yandex.task_manager.task.Subtask new","description new",Status.IN_PROGRESS);
+        inMemoryTaskManager.updateSubtask(idFirstSubtask,"ru.yandex.task_manager.task.Subtask new","description new",Status.DONE);
 
         assertEquals(Status.NEW, listEpic.get(idFirstEpic).status, "Статусы не совпадают.");
     }
@@ -213,16 +216,16 @@ public class InMemoryTaskManagerTest {
         listEpic.get(idFirstEpic).status = null;
         int idSubtask1 =  inMemoryTaskManager.addSubtask("Subtask1", "description1", Status.NEW,idFirstEpic);
 
-        inMemoryTaskManager.updateSubtask(idFirstSubtask,"Subtask new","description new",Status.IN_PROGRESS);
-        inMemoryTaskManager.updateSubtask(idSubtask1,"Subtask new","description new",Status.IN_PROGRESS);
+        inMemoryTaskManager.updateSubtask(idFirstSubtask,"ru.yandex.task_manager.task.Subtask new","description new",Status.IN_PROGRESS);
+        inMemoryTaskManager.updateSubtask(idSubtask1,"ru.yandex.task_manager.task.Subtask new","description new",Status.IN_PROGRESS);
 
         assertEquals(Status.IN_PROGRESS, listEpic.get(idFirstEpic).status, "Статусы не совпадают.");
     }
 
     @Test
     void checkIntersectionsIntervals(){
-        inMemoryTaskManager.updateTask(idFirstTask,"Task new","description new",Status.IN_PROGRESS);
-        inMemoryTaskManager.updateSubtask(idFirstSubtask,"Subtask new","description new",Status.IN_PROGRESS);
+        inMemoryTaskManager.updateTask(idFirstTask,"ru.yandex.task_manager.task.Task new","description new",Status.IN_PROGRESS);
+        inMemoryTaskManager.updateSubtask(idFirstSubtask,"ru.yandex.task_manager.task.Subtask new","description new",Status.IN_PROGRESS);
         List<Task> listPrioritiTasks = inMemoryTaskManager.getPrioritizedTasks();
         assertEquals(listPrioritiTasks.size(), 1, "Пересечения интервалов.");
     }

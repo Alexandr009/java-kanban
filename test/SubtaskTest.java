@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ru.yandex.task_manager.task.Status;
+import ru.yandex.task_manager.task.Subtask;
 
 import java.util.HashMap;
 

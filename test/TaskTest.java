@@ -1,6 +1,7 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ru.yandex.task_manager.task.Status;
+import ru.yandex.task_manager.task.Task;
 
 import java.util.HashMap;
 
