@@ -56,7 +56,6 @@ public class EpicsHttpHandlerTest {
 
     @Test
     public void testAddEpic() throws IOException, InterruptedException {
-        // создаём эпик
         Epic epic = new Epic("Epic 1", "Testing epic", Status.NEW, 1);
 
         // конвертируем его в JSON
@@ -70,7 +69,7 @@ public class EpicsHttpHandlerTest {
                 .POST(HttpRequest.BodyPublishers.ofString(epicJson))
                 .build();
 
-        // вызываем REST для создания эпиков
+        // вызываем REST
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         // проверяем код ответа
@@ -82,7 +81,6 @@ public class EpicsHttpHandlerTest {
             idRespons = jsonObject.get("id").getAsInt();
         }
 
-        // проверяем, что эпик добавлен в менеджер
         HashMap<Integer, Epic> epicsFromManager = inMemoryTaskManager.getAllEpic();
 
         assertNotNull(epicsFromManager, "Задачи не возвращаются");
@@ -92,11 +90,9 @@ public class EpicsHttpHandlerTest {
 
     @Test
     public void testGetEpic() throws IOException, InterruptedException {
-        // создаём и добавляем эпик в менеджер
         Epic epic = new Epic("Epic 2", "Testing epic 2", Status.NEW, 1);
         int epicId = inMemoryTaskManager.addEpic(epic.getName(), epic.getDescription(), epic.getStatus());
 
-        // создаём HTTP-клиент и запрос на получение эпика
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/epics/" + epicId);
         HttpRequest request = HttpRequest.newBuilder()
@@ -110,7 +106,6 @@ public class EpicsHttpHandlerTest {
         // проверяем код ответа
         assertEquals(200, response.statusCode());
 
-        // проверяем, что эпик возвращён корректно
         Epic receivedEpic = gson.fromJson(response.body(), Epic.class);
         assertNotNull(receivedEpic, "Задача не возвращёна");
         assertEquals(epicId, receivedEpic.idTask, "Идентификатор хадачи не совпадает");
@@ -119,11 +114,9 @@ public class EpicsHttpHandlerTest {
 
     @Test
     public void testDeleteEpic() throws IOException, InterruptedException {
-        // создаём и добавляем эпик в менеджер
         Epic epic = new Epic("Epic 3", "Testing epic 3", Status.NEW, 1);
         int epicId = inMemoryTaskManager.addEpic(epic.getName(), epic.getDescription(), epic.getStatus());
 
-        // создаём HTTP-клиент и запрос на удаление эпика
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/epics/" + epicId);
         HttpRequest request = HttpRequest.newBuilder()
@@ -137,7 +130,6 @@ public class EpicsHttpHandlerTest {
         // проверяем код ответа
         assertEquals(200, response.statusCode());
 
-        // проверяем, что эпик был удалён
         HashMap<Integer, Epic> epicsFromManager = inMemoryTaskManager.getAllEpic();
         assertFalse(epicsFromManager.containsKey(epicId), "Задача не была удалёна");
     }

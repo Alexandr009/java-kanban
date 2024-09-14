@@ -58,16 +58,13 @@ public class SubtasksHttpHandlerTest {
 
     @Test
     public void testDeleteSubtask() throws IOException, InterruptedException {
-        // создаём эпик
         int epicId = inMemoryTaskManager.addEpic("Epic for Subtask", "Epic description", Status.NEW);
 
-        // создаём и добавляем сабтаск в менеджер
         int subtaskId = inMemoryTaskManager.addSubtask("Subtask 4", "Testing subtask 4", Status.NEW, epicId);
         inMemoryTaskManager.updateSubtask(subtaskId,"Subtask 4", "Testing subtask 4", Status.IN_PROGRESS);
         inMemoryTaskManager.updateSubtask(subtaskId,"Subtask 4", "Testing subtask 4", Status.DONE);
         Subtask subtaskNew = inMemoryTaskManager.getSubtask(subtaskId);
-        
-        // создаём HTTP-клиент и запрос на удаление сабтаска
+
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/subtasks/" + subtaskId);
         HttpRequest request = HttpRequest.newBuilder()
@@ -80,16 +77,12 @@ public class SubtasksHttpHandlerTest {
         // проверяем код ответа
         assertEquals(200, response.statusCode());
 
-        // проверяем, что сабтаск был удалён
         assertFalse(inMemoryTaskManager.listSubtask.containsKey(subtaskId), "Задача не была удалёна");
     }
 
     @Test
     public void testAddSubtask() throws IOException, InterruptedException {
-        // создаём эпик
         int epicId = inMemoryTaskManager.addEpic("Epic for Subtask", "Epic description", Status.NEW);
-
-        // создаём сабтаск
         Subtask subtask = new Subtask("Subtask 1", "Testing subtask", Status.NEW, counter+1,epicId);
 
         // конвертируем его в JSON
@@ -103,7 +96,6 @@ public class SubtasksHttpHandlerTest {
                 .POST(HttpRequest.BodyPublishers.ofString(subtaskJson))
                 .build();
 
-        // вызываем REST для создания сабтасков
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         int idRespons = 0;
         JsonElement jsonElement = JsonParser.parseString(response.body());//
@@ -114,7 +106,6 @@ public class SubtasksHttpHandlerTest {
         // проверяем код ответа
         assertEquals(201, response.statusCode());
 
-        // проверяем, что сабтаск добавлен в менеджер
         HashMap<Integer, Subtask> subtasksFromManager = inMemoryTaskManager.getAllSubtask();
 
         assertNotNull(subtasksFromManager, "Задачи не возвращаются");
@@ -123,15 +114,13 @@ public class SubtasksHttpHandlerTest {
 
     @Test
     public void testGetSubtask() throws IOException, InterruptedException {
-        // создаём эпик
+
         Epic epic = new Epic("Epic for Subtask", "Epic description", Status.NEW, 1);
         int epicId = inMemoryTaskManager.addEpic(epic.name, epic.description, epic.status);
 
-        // создаём и добавляем сабтаск в менеджер
         Subtask subtask = new Subtask("Subtask 2", "Testing subtask 2", Status.NEW,counter+1, epicId);
         int subtaskId = inMemoryTaskManager.addSubtask(subtask.name, subtask.description, subtask.status, epicId);
 
-        // создаём HTTP-клиент и запрос на получение сабтаска
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/subtasks/" + subtaskId);
         HttpRequest request = HttpRequest.newBuilder()
@@ -145,7 +134,6 @@ public class SubtasksHttpHandlerTest {
         // проверяем код ответа
         assertEquals(200, response.statusCode());
 
-        // проверяем, что сабтаск возвращён корректно
         Subtask receivedSubtask = gson.fromJson(response.body(), Subtask.class);
         assertNotNull(receivedSubtask, "Задача не возвращёна");
         assertEquals(subtaskId, receivedSubtask.idTask, "Идентификатор задачи не совпадает");
@@ -158,16 +146,14 @@ public class SubtasksHttpHandlerTest {
         Epic epic = new Epic("Epic for Subtask", "Epic description", Status.NEW, 1);
         int epicId = inMemoryTaskManager.addEpic(epic.name, epic.description, epic.status);
 
-        // создаём и добавляем сабтаск в менеджер
         Subtask subtask = new Subtask("Subtask 3", "Testing subtask 3", Status.NEW,counter+1, epicId);
         int subtaskId = inMemoryTaskManager.addSubtask(subtask.name, subtask.description, subtask.status, epicId);
 
-        // обновляем сабтаск
         inMemoryTaskManager.updateSubtask(subtaskId,"Updated Subtask 3", "Updated description", Status.IN_PROGRESS);
        // Subtask updatedSubtask = new Subtask("Updated Subtask 3", "Updated description", Status.DONE,counter+1, epicId);
         String updatedSubtaskJson = gson.toJson(inMemoryTaskManager.getSubtask(subtaskId));
         System.out.println("updatedSubtaskJson = " + updatedSubtaskJson);
-        // создаём HTTP-клиент и запрос на обновление сабтаска
+
         HttpClient client = HttpClient.newHttpClient();
         URI url = URI.create("http://localhost:8080/subtasks/" + subtaskId);
         HttpRequest request = HttpRequest.newBuilder()
@@ -181,7 +167,6 @@ public class SubtasksHttpHandlerTest {
         // проверяем код ответа
         assertEquals(200, response.statusCode());
 
-        // проверяем, что сабтаск обновлён в менеджере
         Subtask receivedSubtask = inMemoryTaskManager.getSubtask(subtaskId);
         assertNotNull(receivedSubtask, "Обновлённая задача не найден");
         assertEquals("Updated Subtask 3", receivedSubtask.name, "Имя обновлённой задачи не совпадает");
