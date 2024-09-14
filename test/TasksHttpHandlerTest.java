@@ -121,7 +121,7 @@ public class TasksHttpHandlerTest {
         // проверяем, что задача возвращена корректно
         Task receivedTask = gson.fromJson(response.body(), Task.class);
         assertNotNull(receivedTask, "Задача не возвращена");
-        assertEquals(taskId, receivedTask.idTask, "ID задачи не совпадает");
+        assertEquals(taskId, receivedTask.idTask, "Идентификатор задачи не совпадает");
         assertEquals("Test 2", receivedTask.getName(), "Имя задачи не совпадает");
     }
 

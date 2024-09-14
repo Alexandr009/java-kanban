@@ -81,7 +81,7 @@ public class SubtasksHttpHandlerTest {
         assertEquals(200, response.statusCode());
 
         // проверяем, что сабтаск был удалён
-        assertFalse(inMemoryTaskManager.listSubtask.containsKey(subtaskId), "Сабтаск не был удалён");
+        assertFalse(inMemoryTaskManager.listSubtask.containsKey(subtaskId), "Задача не была удалёна");
     }
 
     @Test
@@ -117,8 +117,8 @@ public class SubtasksHttpHandlerTest {
         // проверяем, что сабтаск добавлен в менеджер
         HashMap<Integer, Subtask> subtasksFromManager = inMemoryTaskManager.getAllSubtask();
 
-        assertNotNull(subtasksFromManager, "Сабтаски не возвращаются");
-        assertEquals("Subtask 1", subtasksFromManager.get(idRespons).name, "Некорректное имя сабтаска");
+        assertNotNull(subtasksFromManager, "Задачи не возвращаются");
+        assertEquals("Subtask 1", subtasksFromManager.get(idRespons).name, "Некорректное имя задачи");
     }
 
     @Test
@@ -147,9 +147,9 @@ public class SubtasksHttpHandlerTest {
 
         // проверяем, что сабтаск возвращён корректно
         Subtask receivedSubtask = gson.fromJson(response.body(), Subtask.class);
-        assertNotNull(receivedSubtask, "Сабтаск не возвращён");
-        assertEquals(subtaskId, receivedSubtask.idTask, "ID сабтаска не совпадает");
-        assertEquals("Subtask 2", receivedSubtask.name, "Имя сабтаска не совпадает");
+        assertNotNull(receivedSubtask, "Задача не возвращёна");
+        assertEquals(subtaskId, receivedSubtask.idTask, "Идентификатор задачи не совпадает");
+        assertEquals("Subtask 2", receivedSubtask.name, "Имя задачи не совпадает");
     }
 
     @Test
@@ -183,9 +183,9 @@ public class SubtasksHttpHandlerTest {
 
         // проверяем, что сабтаск обновлён в менеджере
         Subtask receivedSubtask = inMemoryTaskManager.getSubtask(subtaskId);
-        assertNotNull(receivedSubtask, "Обновлённый сабтаск не найден");
-        assertEquals("Updated Subtask 3", receivedSubtask.name, "Имя обновлённого сабтаска не совпадает");
-        assertEquals(Status.IN_PROGRESS, receivedSubtask.getStatus(), "Статус обновлённого сабтаска не совпадает");
+        assertNotNull(receivedSubtask, "Обновлённая задача не найден");
+        assertEquals("Updated Subtask 3", receivedSubtask.name, "Имя обновлённой задачи не совпадает");
+        assertEquals(Status.IN_PROGRESS, receivedSubtask.getStatus(), "Статус обновлённой задачи не совпадает");
     }
 
 

@@ -85,9 +85,9 @@ public class EpicsHttpHandlerTest {
         // проверяем, что эпик добавлен в менеджер
         HashMap<Integer, Epic> epicsFromManager = inMemoryTaskManager.getAllEpic();
 
-        assertNotNull(epicsFromManager, "Эпики не возвращаются");
-        assertEquals(1, epicsFromManager.size(), "Некорректное количество эпиков");
-        assertEquals("Epic 1", inMemoryTaskManager.getEpic(idRespons).name, "Некорректное имя эпика");
+        assertNotNull(epicsFromManager, "Задачи не возвращаются");
+        assertEquals(1, epicsFromManager.size(), "Некорректное количество задач");
+        assertEquals("Epic 1", inMemoryTaskManager.getEpic(idRespons).name, "Некорректное имя задачи");
     }
 
     @Test
@@ -112,9 +112,9 @@ public class EpicsHttpHandlerTest {
 
         // проверяем, что эпик возвращён корректно
         Epic receivedEpic = gson.fromJson(response.body(), Epic.class);
-        assertNotNull(receivedEpic, "Эпик не возвращён");
-        assertEquals(epicId, receivedEpic.idTask, "ID эпика не совпадает");
-        assertEquals("Epic 2", receivedEpic.getName(), "Имя эпика не совпадает");
+        assertNotNull(receivedEpic, "Задача не возвращёна");
+        assertEquals(epicId, receivedEpic.idTask, "Идентификатор хадачи не совпадает");
+        assertEquals("Epic 2", receivedEpic.getName(), "Имя задачи не совпадает");
     }
 
     @Test
@@ -139,6 +139,6 @@ public class EpicsHttpHandlerTest {
 
         // проверяем, что эпик был удалён
         HashMap<Integer, Epic> epicsFromManager = inMemoryTaskManager.getAllEpic();
-        assertFalse(epicsFromManager.containsKey(epicId), "Эпик не был удалён");
+        assertFalse(epicsFromManager.containsKey(epicId), "Задача не была удалёна");
     }
 }
